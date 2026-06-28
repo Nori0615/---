@@ -1,4 +1,4 @@
-const CACHE_NAME = "fridgely-v1";
+const CACHE_NAME = "fridgely-v2";
 const appUrl = (path) => new URL(path, self.registration.scope).toString();
 const APP_SHELL = [appUrl("./"), appUrl("index.html"), appUrl("manifest.webmanifest")];
 
