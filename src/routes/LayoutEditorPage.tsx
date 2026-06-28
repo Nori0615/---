@@ -1,8 +1,8 @@
 import { Plus, RotateCcw, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { AreaEditor } from "../components/fridge/AreaEditor";
+import { DraggableLayoutPreview } from "../components/fridge/DraggableLayoutPreview";
 import { FridgeCanvas } from "../components/fridge/FridgeCanvas";
-import { LayoutMiniPreview } from "../components/fridge/LayoutMiniPreview";
 import { Button } from "../components/ui/Button";
 import { useFridgeStore } from "../store/fridgeStore";
 import { useUiStore } from "../store/uiStore";
@@ -46,22 +46,29 @@ export function LayoutEditorPage() {
 
   return (
     <div className="grid gap-5">
-      <LayoutMiniPreview
+      <DraggableLayoutPreview
         compact
         selectedAreaId={selectedArea?.id}
         onSelectArea={setSelectedAreaId}
-        className="fixed bottom-24 right-3 z-40 w-[132px] xl:hidden"
+        storageKey="fridgely-layout-preview-mobile"
+        className="w-[84px] sm:w-[100px] xl:hidden"
+      />
+      <DraggableLayoutPreview
+        selectedAreaId={selectedArea?.id}
+        onSelectArea={setSelectedAreaId}
+        storageKey="fridgely-layout-preview-desktop"
+        className="hidden w-[260px] xl:block"
       />
 
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div className="min-w-0 flex-1">
+      <div className="grid gap-3 sm:flex sm:flex-wrap sm:items-end sm:justify-between">
+        <div className="min-w-0">
           <p className="text-sm font-black text-teal-700">Layout</p>
           <h2 className="text-2xl font-black text-slate-900">レイアウトを整える</h2>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-600">
             エリアを選んで、ボタンで位置や大きさを調整できます。細かくしたい時だけスライダーを開いてください。
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex w-full flex-wrap gap-2 sm:w-auto">
           <Button variant="secondary" onClick={() => void applyTemplate("family").then(() => showToast("ファミリーテンプレートに変更しました"))}>
             <Sparkles size={17} />
             標準
@@ -85,12 +92,6 @@ export function LayoutEditorPage() {
         </div>
 
         <aside className="grid min-w-0 content-start gap-4">
-          <LayoutMiniPreview
-            selectedAreaId={selectedArea?.id}
-            onSelectArea={setSelectedAreaId}
-            className="hidden xl:sticky xl:top-24 xl:block xl:w-[260px] xl:justify-self-end"
-          />
-
           <section className="rounded-[1.25rem] border border-slate-200 bg-white p-4 shadow-sm">
             <p className="mb-3 text-sm font-black text-slate-700">エリアを追加</p>
             <div className="flex flex-wrap gap-2">
