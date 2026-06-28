@@ -1,0 +1,10 @@
+{
+  "name": "Fridgely",
+  "short_name": "マイ冷蔵庫",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7fcfd",
+  "theme_color": "#e8f7fb",
+  "description": "自分の冷蔵庫をそのままスマホの中に再現するローカルファーストな冷蔵庫管理アプリ",
+  "icons": []
+}

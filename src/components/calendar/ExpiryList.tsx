@@ -1,0 +1,67 @@
+import { clsx } from "clsx";
+import { Clock3 } from "lucide-react";
+import { useFoodStore } from "../../store/foodStore";
+import { useSettingsStore } from "../../store/settingsStore";
+import { useUiStore } from "../../store/uiStore";
+import { compactDate } from "../../utils/date";
+import { getFoodStatus, statusClass } from "../../utils/foodStatus";
+import { EmptyState } from "../ui/EmptyState";
+
+interface ExpiryListProps {
+  mode?: "all" | "expired" | "today" | "threeDays" | "week";
+}
+
+export function ExpiryList({ mode = "all" }: ExpiryListProps) {
+  const foods = useFoodStore((state) => state.foods);
+  const warningDays = useSettingsStore((state) => state.settings?.warningDays ?? 7);
+  const selectFood = useUiStore((state) => state.selectFood);
+
+  const rows = foods
+    .map((food) => ({ food, status: getFoodStatus(food, warningDays) }))
+    .filter(({ status }) => {
+      if (!status.date) return false;
+      if (mode === "expired") return status.state === "expired";
+      if (mode === "today") return status.state === "today";
+      if (mode === "threeDays") return (status.daysLeft ?? 999) <= 3;
+      if (mode === "week") return (status.daysLeft ?? 999) <= 7;
+      return true;
+    })
+    .sort((a, b) => (a.status.daysLeft ?? 999) - (b.status.daysLeft ?? 999));
+
+  return (
+    <section className="rounded-[1.75rem] border border-cyan-100 bg-white/82 p-5 shadow-soft">
+      <div className="mb-4 flex items-center gap-2">
+        <Clock3 size={18} className="text-cyan-700" />
+        <h2 className="text-lg font-black text-slate-900">期限が近い順</h2>
+      </div>
+      <div className="grid gap-2">
+        {rows.length > 0 ? (
+          rows.map(({ food, status }) => (
+            <button
+              key={food.id}
+              type="button"
+              onClick={() => selectFood(food.id)}
+              className={clsx("focus-ring flex items-center justify-between gap-3 rounded-2xl border px-3 py-3 text-left", statusClass(status.state))}
+            >
+              <span className="flex min-w-0 items-center gap-2">
+                <span className="text-xl" aria-hidden="true">
+                  {food.icon}
+                </span>
+                <span className="min-w-0">
+                  <span className="block truncate font-black text-slate-900">{food.name}</span>
+                  <span className="text-xs font-bold text-slate-500">{status.kind === "consume" ? "消費期限" : "賞味期限"}</span>
+                </span>
+              </span>
+              <span className="shrink-0 text-right text-sm font-black">
+                <span className="block">{compactDate(status.date)}</span>
+                <span className="text-xs">{status.label}</span>
+              </span>
+            </button>
+          ))
+        ) : (
+          <EmptyState title="表示する期限はありません">期限なしの食材は一覧画面から確認できます。</EmptyState>
+        )}
+      </div>
+    </section>
+  );
+}
