@@ -20,19 +20,36 @@ interface FridgeAreaProps {
   foods: FoodItem[];
   warningDays: number;
   activeDrop?: boolean;
+  selected?: boolean;
+  editing?: boolean;
+  onSelectArea?: (areaId: string) => void;
   onSelectFood: (food: FoodItem) => void;
   onPointerStart: (foodId: string, event: PointerEvent<HTMLButtonElement>) => void;
 }
 
-export function FridgeArea({ area, foods, warningDays, activeDrop, onSelectFood, onPointerStart }: FridgeAreaProps) {
+export function FridgeArea({
+  area,
+  foods,
+  warningDays,
+  activeDrop,
+  selected,
+  editing,
+  onSelectArea,
+  onSelectFood,
+  onPointerStart,
+}: FridgeAreaProps) {
   const Icon = areaIcons[area.icon as keyof typeof areaIcons] ?? Archive;
 
   return (
     <section
       data-area-id={area.id}
+      onClick={() => onSelectArea?.(area.id)}
       className={clsx(
-        "absolute overflow-hidden rounded-[1.35rem] border bg-white/70 p-2 shadow-[inset_0_1px_18px_rgba(255,255,255,0.72)] transition",
-        activeDrop ? "border-cyan-500 ring-4 ring-cyan-300/40" : "border-white/80",
+        "absolute overflow-hidden rounded-[1rem] border bg-white/75 p-2 shadow-[inset_0_1px_18px_rgba(255,255,255,0.75)] transition",
+        editing && "cursor-pointer",
+        activeDrop && "border-teal-500 ring-4 ring-teal-300/35",
+        selected && !activeDrop && "border-slate-900 ring-4 ring-slate-900/10",
+        !activeDrop && !selected && "border-white/80",
       )}
       style={{
         left: `${area.x}%`,
@@ -45,10 +62,10 @@ export function FridgeArea({ area, foods, warningDays, activeDrop, onSelectFood,
     >
       <div className="mb-1 flex items-center justify-between gap-2 text-[11px] font-black text-slate-700">
         <span className="flex min-w-0 items-center gap-1 truncate">
-          <Icon size={13} aria-hidden="true" />
+          <Icon size={13} className="text-slate-500" aria-hidden="true" />
           <span className="truncate">{area.name}</span>
         </span>
-        <span className="rounded-full bg-white/70 px-1.5 py-0.5 text-[10px] text-slate-500">{foods.length}</span>
+        <span className="rounded-full bg-white/80 px-1.5 py-0.5 text-[10px] text-slate-500 shadow-sm">{foods.length}</span>
       </div>
       <div className="grid max-h-[calc(100%-24px)] grid-cols-1 gap-1 overflow-y-auto pr-1 sm:grid-cols-2">
         {foods.map((food) => (

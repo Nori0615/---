@@ -26,6 +26,9 @@ interface DragState {
 interface FridgeCanvasProps {
   search?: string;
   onSearchChange?: (value: string) => void;
+  mode?: "view" | "editor";
+  selectedAreaId?: string;
+  onSelectArea?: (areaId: string) => void;
 }
 
 function findAreaFromPoint(x: number, y: number) {
@@ -34,7 +37,7 @@ function findAreaFromPoint(x: number, y: number) {
   return area?.dataset.areaId;
 }
 
-export function FridgeCanvas({ search = "", onSearchChange }: FridgeCanvasProps) {
+export function FridgeCanvas({ search = "", onSearchChange, mode = "view", selectedAreaId, onSelectArea }: FridgeCanvasProps) {
   const areas = useFridgeStore((state) => state.areas);
   const foods = useFoodStore((state) => state.foods);
   const moveFood = useFoodStore((state) => state.moveFood);
@@ -132,10 +135,13 @@ export function FridgeCanvas({ search = "", onSearchChange }: FridgeCanvasProps)
     .sort((a, b) => (a.status.daysLeft ?? 99) - (b.status.daysLeft ?? 99))
     .slice(0, 4);
 
+  const editorMode = mode === "editor";
+
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(320px,560px)_1fr]">
-      <section className="rounded-[1.75rem] border border-cyan-100 bg-white/78 p-3 shadow-soft">
-        <div className="mb-3 flex items-center gap-2">
+    <div className={editorMode ? "grid min-w-0 gap-4" : "grid min-w-0 gap-4 lg:grid-cols-[minmax(320px,560px)_1fr]"}>
+      <section className="min-w-0 rounded-[1.25rem] border border-slate-200/80 bg-white p-3 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+        {!editorMode ? (
+          <div className="mb-3 flex items-center gap-2">
           <label className="relative min-w-0 flex-1">
             <span className="sr-only">冷蔵庫の中を検索</span>
             <Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -143,20 +149,21 @@ export function FridgeCanvas({ search = "", onSearchChange }: FridgeCanvasProps)
               value={search}
               onChange={(event) => onSearchChange?.(event.target.value)}
               placeholder="冷蔵庫の中を検索"
-              className="focus-ring w-full rounded-2xl border border-cyan-100 bg-white py-3 pl-11 pr-4 text-base font-semibold shadow-sm"
+              className="focus-ring w-full rounded-2xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-base font-semibold shadow-sm placeholder:text-slate-400"
             />
           </label>
           <Button onClick={() => openFoodForm()} className="hidden sm:inline-flex">
             食材追加
           </Button>
-        </div>
+          </div>
+        ) : null}
 
-        <div className="mx-auto aspect-[9/15] w-full max-w-[520px] rounded-[2rem] border-[10px] border-slate-100 bg-gradient-to-b from-white via-cyan-50 to-slate-100 p-3 shadow-inner">
-          <div className="fridge-grid relative h-full overflow-hidden rounded-[1.45rem] border border-cyan-100 bg-cyan-50/60">
-            <div className="absolute inset-x-[5%] top-2 h-2 rounded-full bg-white/75" />
+        <div className="mx-auto aspect-[9/15] w-full max-w-[min(520px,100%)] rounded-[1.8rem] border-[8px] border-slate-100 bg-gradient-to-b from-white via-slate-50 to-teal-50 p-3 shadow-inner">
+          <div className="fridge-grid relative h-full overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white/70">
+            <div className="absolute inset-x-[6%] top-2 h-1.5 rounded-full bg-white shadow-sm" />
             <div className="absolute bottom-3 left-1/2 h-1.5 w-20 -translate-x-1/2 rounded-full bg-slate-200/80" />
-            {shelfLines.map((top) => (
-              <FridgeShelf key={top} top={top} />
+            {shelfLines.map((top, index) => (
+              <FridgeShelf key={`${top}-${index}`} top={top} />
             ))}
             {areas.map((area) => (
               <FridgeArea
@@ -165,6 +172,9 @@ export function FridgeCanvas({ search = "", onSearchChange }: FridgeCanvasProps)
                 foods={visibleFoods.filter((food) => food.areaId === area.id)}
                 warningDays={warningDays}
                 activeDrop={drag?.activeAreaId === area.id}
+                selected={selectedAreaId === area.id}
+                editing={editorMode}
+                onSelectArea={onSelectArea}
                 onSelectFood={handleSelectFood}
                 onPointerStart={handlePointerStart}
               />
@@ -173,14 +183,15 @@ export function FridgeCanvas({ search = "", onSearchChange }: FridgeCanvasProps)
         </div>
       </section>
 
+      {!editorMode ? (
       <aside className="grid content-start gap-4">
-        <section className="rounded-[1.75rem] border border-cyan-100 bg-white/82 p-5 shadow-soft">
+        <section className="rounded-[1.25rem] border border-slate-200/80 bg-white p-5 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-cyan-700">Today</p>
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-teal-700">Today</p>
               <h2 className="text-xl font-black text-slate-900">今日見ておきたいもの</h2>
             </div>
-            <span className="rounded-full bg-cyan-50 px-3 py-1 text-xs font-black text-cyan-800">{foods.length}品</span>
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-700">{foods.length}品</span>
           </div>
           <div className="mt-4 grid gap-2">
             {urgentFoods.map(({ food }) => (
@@ -191,13 +202,14 @@ export function FridgeCanvas({ search = "", onSearchChange }: FridgeCanvasProps)
             ) : null}
           </div>
         </section>
-        <section className="rounded-[1.75rem] border border-emerald-100 bg-emerald-50/70 p-5">
+        <section className="rounded-[1.25rem] border border-emerald-100 bg-emerald-50/70 p-5">
           <h2 className="text-lg font-black text-slate-900">動かし方</h2>
           <p className="mt-2 text-sm leading-6 text-slate-600">
             食材カードを指やマウスで押したまま動かすと、移動先のエリアが光ります。離すと保存場所が自動で保存されます。
           </p>
         </section>
       </aside>
+      ) : null}
 
       {drag?.isDragging && draggingFood ? (
         <div

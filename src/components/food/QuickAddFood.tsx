@@ -36,10 +36,10 @@ export function QuickAddFood() {
   };
 
   return (
-    <section className="rounded-[1.75rem] border border-cyan-100 bg-white/82 p-5 shadow-soft">
+    <section className="rounded-[1.25rem] border border-slate-200/80 bg-white p-5 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-cyan-700">Quick</p>
+          <p className="text-xs font-black uppercase tracking-[0.16em] text-teal-700">Quick</p>
           <h2 className="text-lg font-black text-slate-900">すぐ追加</h2>
         </div>
         <Button variant="secondary" size="sm" onClick={() => openFoodForm()}>
@@ -54,7 +54,7 @@ export function QuickAddFood() {
               key={food.id}
               type="button"
               onClick={() => void addFavorite(food.id)}
-              className="focus-ring inline-flex shrink-0 items-center gap-2 rounded-2xl bg-cyan-50 px-3 py-2 text-sm font-black text-cyan-900"
+              className="focus-ring inline-flex shrink-0 items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-black text-slate-800 hover:bg-white"
             >
               <span aria-hidden="true">{food.icon}</span>
               {food.name}

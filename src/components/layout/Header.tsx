@@ -17,10 +17,10 @@ export function Header() {
   const openFoodForm = useUiStore((state) => state.openFoodForm);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-cyan-100/80 bg-[#f7fcfd]/90 px-4 py-3 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/88 px-4 py-3 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-700">Fridgely</p>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-teal-700">Fridgely</p>
           <h1 className="truncate text-xl font-black text-slate-900">マイ冷蔵庫</h1>
         </div>
         <nav className="hidden items-center gap-1 lg:flex" aria-label="メインナビゲーション">
@@ -31,7 +31,7 @@ export function Header() {
               className={({ isActive }) =>
                 clsx(
                   "focus-ring inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-black transition",
-                  isActive ? "bg-cyan-700 text-white" : "text-slate-600 hover:bg-white",
+                  isActive ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100",
                 )
               }
             >
