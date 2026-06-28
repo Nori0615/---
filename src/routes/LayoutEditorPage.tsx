@@ -51,13 +51,19 @@ export function LayoutEditorPage() {
         selectedAreaId={selectedArea?.id}
         onSelectArea={setSelectedAreaId}
         storageKey="fridgely-layout-preview-mobile"
-        className="w-[84px] sm:w-[100px] xl:hidden"
+        defaultWidth={84}
+        minWidth={68}
+        maxWidth={150}
+        className="xl:hidden"
       />
       <DraggableLayoutPreview
         selectedAreaId={selectedArea?.id}
         onSelectArea={setSelectedAreaId}
         storageKey="fridgely-layout-preview-desktop"
-        className="hidden w-[260px] xl:block"
+        defaultWidth={260}
+        minWidth={190}
+        maxWidth={380}
+        className="hidden xl:block"
       />
 
       <div className="grid gap-3 sm:flex sm:flex-wrap sm:items-end sm:justify-between">

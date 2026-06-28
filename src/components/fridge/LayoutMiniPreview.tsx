@@ -10,10 +10,11 @@ interface LayoutMiniPreviewProps {
   selectedAreaId?: string;
   onSelectArea?: (areaId: string) => void;
   compact?: boolean;
+  fluid?: boolean;
   className?: string;
 }
 
-export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = false, className }: LayoutMiniPreviewProps) {
+export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = false, fluid = false, className }: LayoutMiniPreviewProps) {
   const areas = useFridgeStore((state) => state.areas);
   const foods = useFoodStore((state) => state.foods);
   const selectedArea = areas.find((area) => area.id === selectedAreaId);
@@ -55,7 +56,7 @@ export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = fals
         </div>
       )}
 
-      <div className={clsx("mx-auto aspect-[9/15] w-full", compact ? "max-w-[72px]" : "max-w-[190px]")}>
+      <div className={clsx("mx-auto aspect-[9/15] w-full", fluid ? "max-w-none" : compact ? "max-w-[72px]" : "max-w-[190px]")}>
         <div
           className={clsx(
             "relative h-full overflow-hidden border-slate-100 bg-gradient-to-b from-white via-slate-50 to-teal-50 shadow-inner",
