@@ -1,7 +1,9 @@
 {
   "name": "Fridgely",
   "short_name": "マイ冷蔵庫",
-  "start_url": "/",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f7fcfd",
   "theme_color": "#e8f7fb",

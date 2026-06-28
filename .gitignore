@@ -2,6 +2,7 @@ node_modules/
 .pnpm-store/
 dist/
 *.tsbuildinfo
+*.log
 tailwind.config.js
 tailwind.config.d.ts
 vite.config.js

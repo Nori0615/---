@@ -1,5 +1,6 @@
 const CACHE_NAME = "fridgely-v1";
-const APP_SHELL = ["/", "/index.html", "/manifest.webmanifest"];
+const appUrl = (path) => new URL(path, self.registration.scope).toString();
+const APP_SHELL = [appUrl("./"), appUrl("index.html"), appUrl("manifest.webmanifest")];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
@@ -22,7 +23,7 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
-      return fetch(event.request).catch(() => caches.match("/index.html"));
+      return fetch(event.request).catch(() => caches.match(appUrl("index.html")));
     }),
   );
 });
