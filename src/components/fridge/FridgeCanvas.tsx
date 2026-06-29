@@ -144,8 +144,8 @@ export function FridgeCanvas({ search = "", onSearchChange, mode = "view", selec
     <div className={editorMode ? "grid min-w-0 gap-4" : "grid min-w-0 gap-4 lg:grid-cols-[minmax(320px,560px)_1fr]"}>
       <section
         className={clsx(
-          "min-w-0 rounded-[1.25rem] border border-slate-200/80 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.08)] transition-colors dark:border-slate-800 dark:bg-slate-900/90",
-          compactDensity ? "p-2" : "p-3",
+          "min-w-0 rounded-xl border border-slate-200 bg-white shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90",
+          compactDensity ? "p-2.5" : "p-3",
         )}
       >
         {!editorMode ? (
@@ -157,7 +157,7 @@ export function FridgeCanvas({ search = "", onSearchChange, mode = "view", selec
                 value={search}
                 onChange={(event) => onSearchChange?.(event.target.value)}
                 placeholder="冷蔵庫の中を検索"
-                className="focus-ring w-full rounded-2xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-base font-semibold text-slate-800 shadow-sm placeholder:text-slate-400 transition-colors dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+                className="focus-ring w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-[15px] font-normal text-slate-800 shadow-sm placeholder:text-slate-400 transition-colors dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
               />
             </label>
             <Button onClick={() => openFoodForm()} className="hidden sm:inline-flex">
@@ -169,10 +169,10 @@ export function FridgeCanvas({ search = "", onSearchChange, mode = "view", selec
         <div
           className={clsx(
             "mx-auto w-full border-slate-100 bg-gradient-to-b from-white via-slate-50 to-teal-50 shadow-inner dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-teal-950/80",
-            compactLayout ? "aspect-[9/12] max-w-[min(430px,100%)] rounded-[1.35rem] border-[6px] p-2" : "aspect-[9/15] max-w-[min(520px,100%)] rounded-[1.8rem] border-[8px] p-3",
+            compactLayout ? "aspect-[9/12] max-w-[min(430px,100%)] rounded-xl border-[5px] p-2" : "aspect-[9/15] max-w-[min(520px,100%)] rounded-xl border-[6px] p-2.5",
           )}
         >
-          <div className="fridge-grid relative h-full overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white/70 dark:border-slate-700 dark:bg-slate-950/45">
+          <div className="fridge-grid relative h-full overflow-hidden rounded-lg border border-slate-200 bg-white/70 dark:border-slate-700 dark:bg-slate-950/45">
             <div className="absolute inset-x-[6%] top-2 h-1.5 rounded-full bg-white shadow-sm dark:bg-slate-700" />
             <div className="absolute bottom-3 left-1/2 h-1.5 w-20 -translate-x-1/2 rounded-full bg-slate-200/80 dark:bg-slate-700/80" />
             {shelfLines.map((top, index) => (
@@ -200,16 +200,16 @@ export function FridgeCanvas({ search = "", onSearchChange, mode = "view", selec
         <aside className={clsx("grid content-start", compactDensity ? "gap-3" : "gap-4")}>
           <section
             className={clsx(
-              "rounded-[1.25rem] border border-slate-200/80 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.08)] transition-colors dark:border-slate-800 dark:bg-slate-900/90",
+              "rounded-xl border border-slate-200 bg-white shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90",
               compactDensity ? "p-4" : "p-5",
             )}
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.16em] text-teal-700 dark:text-teal-300">Today</p>
-                <h2 className="text-xl font-black text-slate-900 dark:text-slate-50">今日見ておきたいもの</h2>
+                <p className="text-xs font-semibold uppercase text-teal-700 dark:text-teal-300">Today</p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-50">今日見ておきたいもの</h2>
               </div>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-700 dark:bg-slate-800 dark:text-slate-200">{foods.length}品</span>
+              <span className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">{foods.length}品</span>
             </div>
             <div className={clsx("grid gap-2", compactDensity ? "mt-3" : "mt-4")}>
               {urgentFoods.map(({ food }) => (
@@ -220,8 +220,8 @@ export function FridgeCanvas({ search = "", onSearchChange, mode = "view", selec
               ) : null}
             </div>
           </section>
-          <section className={clsx("rounded-[1.25rem] border border-emerald-100 bg-emerald-50/70 transition-colors dark:border-teal-900/70 dark:bg-teal-950/30", compactDensity ? "p-4" : "p-5")}>
-            <h2 className="text-lg font-black text-slate-900 dark:text-slate-50">動かし方</h2>
+          <section className={clsx("rounded-xl border border-emerald-100 bg-emerald-50/70 transition-colors dark:border-teal-900/70 dark:bg-teal-950/30", compactDensity ? "p-4" : "p-5")}>
+            <h2 className="text-base font-bold text-slate-900 dark:text-slate-50">動かし方</h2>
             <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
               食材カードを指やマウスで押したまま動かすと、移動先のエリアが光ります。離すと保存場所が自動で保存されます。
             </p>

@@ -30,18 +30,18 @@ export function FoodCard({ food, warningDays, compact = false, ghost = false, on
       onClick={() => onSelect?.(food)}
       onPointerDown={(event) => onPointerStart?.(food.id, event)}
       className={clsx(
-        "food-card focus-ring group min-w-0 rounded-xl border border-slate-200 p-2 pl-3 text-left shadow-sm transition",
-        "hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md active:scale-[0.98] dark:hover:border-slate-600",
+        "food-card focus-ring group min-w-0 rounded-lg border border-slate-200 p-2.5 pl-3.5 text-left shadow-sm transition",
+        "hover:border-slate-300 hover:shadow-md active:scale-[0.98] dark:hover:border-slate-600",
         statusTone[status.state],
         ghost && "w-44 rotate-1 opacity-95 shadow-soft",
       )}
       style={{
-        background: `linear-gradient(90deg, ${food.color} 0 7px, var(--food-card-bg) 7px)`,
+        background: `linear-gradient(90deg, ${food.color} 0 6px, var(--food-card-bg) 6px)`,
       }}
       aria-label={`${food.name}を開く。長押しまたはドラッグで移動`}
     >
       <div className="flex items-start justify-between gap-2">
-        <span className={clsx("min-w-0 truncate font-black text-slate-900 dark:text-slate-50", compact ? "text-[12px]" : "text-sm")}>
+        <span className={clsx("min-w-0 truncate font-semibold text-slate-900 dark:text-slate-50", compact ? "text-[12px]" : "text-[15px]")}>
           <span className="mr-1" aria-hidden="true">
             {food.icon}
           </span>
@@ -51,7 +51,7 @@ export function FoodCard({ food, warningDays, compact = false, ghost = false, on
           <Star className="shrink-0 fill-amber-300 text-amber-500" size={compact ? 13 : 15} aria-hidden="true" />
         ) : null}
       </div>
-      <div className="mt-1 flex items-center justify-between gap-2 text-[11px] font-bold text-slate-500 dark:text-slate-400">
+      <div className="mt-1 flex items-center justify-between gap-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">
         <span>
           {food.quantity}
           {food.unit}

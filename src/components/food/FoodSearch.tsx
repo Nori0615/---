@@ -40,7 +40,7 @@ export function FoodSearch({
   onOnlyPriority,
 }: FoodSearchProps) {
   return (
-    <section className="grid gap-3 rounded-[1.5rem] border border-cyan-100 bg-white/90 p-4 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
+    <section className="grid gap-3 rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
       <label className="relative">
         <span className="sr-only">食材を検索</span>
         <Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -48,7 +48,7 @@ export function FoodSearch({
           value={search}
           onChange={(event) => onSearch(event.target.value)}
           placeholder="名前・メモで検索"
-          className="focus-ring w-full rounded-2xl border border-cyan-100 bg-white py-3 pl-11 pr-4 text-base font-semibold text-slate-800 shadow-sm transition-colors dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+          className="focus-ring w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-[15px] font-normal text-slate-800 shadow-sm transition-colors dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
         />
       </label>
       <div className="grid gap-3 md:grid-cols-3">
@@ -81,7 +81,7 @@ export function FoodSearch({
           ["開封済みのみ", onlyOpened, onOnlyOpened],
           ["優先のみ", onlyPriority, onOnlyPriority],
         ].map(([label, checked, onChange]) => (
-          <label key={String(label)} className="inline-flex cursor-pointer items-center gap-2 rounded-2xl bg-cyan-50 px-3 py-2 text-sm font-bold text-cyan-900 transition-colors dark:bg-teal-950/70 dark:text-teal-100">
+          <label key={String(label)} className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-700 transition-colors dark:bg-slate-800 dark:text-slate-200">
             <input
               type="checkbox"
               checked={Boolean(checked)}

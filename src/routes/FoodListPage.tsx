@@ -60,8 +60,8 @@ export function FoodListPage() {
   return (
     <div className="grid gap-5">
       <div>
-        <p className="text-sm font-black text-cyan-700 dark:text-teal-300">Food List</p>
-        <h2 className="text-2xl font-black text-slate-900 dark:text-slate-50">食材一覧</h2>
+        <p className="text-sm font-semibold text-cyan-700 dark:text-teal-300">Food List</p>
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50">食材一覧</h2>
       </div>
       <FoodSearch
         search={search}
@@ -84,21 +84,21 @@ export function FoodListPage() {
       <div className="grid gap-3">
         {visibleFoods.length > 0 ? (
           visibleFoods.map(({ food, status }) => (
-            <section key={food.id} className="rounded-[1.5rem] border border-cyan-100 bg-white/90 p-4 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
+            <section key={food.id} className="rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
               <div className="flex flex-wrap items-start justify-between gap-3">
-                <button type="button" onClick={() => selectFood(food.id)} className="focus-ring flex min-w-0 flex-1 items-center gap-3 rounded-2xl text-left">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl text-2xl" style={{ backgroundColor: food.color }}>
+                <button type="button" onClick={() => selectFood(food.id)} className="focus-ring flex min-w-0 flex-1 items-center gap-3 rounded-lg text-left">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg text-2xl" style={{ backgroundColor: food.color }}>
                     {food.icon}
                   </span>
                   <span className="min-w-0">
-                    <span className="block truncate text-lg font-black text-slate-900 dark:text-slate-50">{food.name}</span>
-                    <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
+                    <span className="block truncate text-lg font-semibold text-slate-900 dark:text-slate-50">{food.name}</span>
+                    <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
                       {food.category} ・ {food.quantity}
                       {food.unit}
                     </span>
                   </span>
                 </button>
-                <span className={`rounded-2xl border px-3 py-2 text-sm font-black ${statusClass(status.state)}`}>
+                <span className={`rounded-lg border px-3 py-2 text-sm font-semibold ${statusClass(status.state)}`}>
                   {compactDate(status.date)} {status.label}
                 </span>
               </div>

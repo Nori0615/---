@@ -34,7 +34,7 @@ export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = fals
   return (
     <section
       className={clsx(
-        "pointer-events-auto relative rounded-[1.25rem] border border-slate-200/90 bg-white/95 shadow-[0_18px_50px_rgba(15,23,42,0.14)] backdrop-blur transition-colors dark:border-slate-700 dark:bg-slate-900/95",
+        "pointer-events-auto relative rounded-xl border border-slate-200/90 bg-white/95 shadow-[0_10px_30px_rgba(15,23,42,0.12)] backdrop-blur transition-colors dark:border-slate-700 dark:bg-slate-900/95",
         compact ? "p-1.5" : "p-3",
         className,
       )}
@@ -47,8 +47,8 @@ export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = fals
       ) : (
         <div className="mb-2 flex items-center justify-between gap-2">
           <div className="min-w-0">
-            <p className="text-xs font-black text-teal-700 dark:text-teal-300">Preview</p>
-            <p className="truncate text-sm font-black text-slate-900 dark:text-slate-50">{selectedArea?.name ?? "エリアを選択"}</p>
+            <p className="text-xs font-semibold text-teal-700 dark:text-teal-300">Preview</p>
+            <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-50">{selectedArea?.name ?? "エリアを選択"}</p>
           </div>
           <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200" aria-hidden="true">
             <PictureInPicture2 size={17} />
@@ -92,9 +92,9 @@ export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = fals
                   aria-label={`${area.name}を編集対象にする`}
                 >
                   <span className="flex h-full min-h-0 flex-col justify-between p-1">
-                    <span className={compact ? "sr-only" : "truncate text-[10px] font-black text-slate-700 dark:text-slate-200"}>{area.name}</span>
+                    <span className={compact ? "sr-only" : "truncate text-[10px] font-semibold text-slate-700 dark:text-slate-200"}>{area.name}</span>
                     {!compact && count > 0 ? (
-                      <span className="self-end rounded-full bg-white/90 px-1 text-[8px] font-black text-slate-600 shadow-sm dark:bg-slate-950/70 dark:text-slate-300">{count}</span>
+                      <span className="self-end rounded-md bg-white/90 px-1 text-[8px] font-semibold text-slate-600 shadow-sm dark:bg-slate-950/70 dark:text-slate-300">{count}</span>
                     ) : null}
                   </span>
                 </button>

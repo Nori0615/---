@@ -29,10 +29,10 @@ export function ExpiryList({ mode = "all" }: ExpiryListProps) {
     .sort((a, b) => (a.status.daysLeft ?? 999) - (b.status.daysLeft ?? 999));
 
   return (
-    <section className="rounded-[1.75rem] border border-cyan-100 bg-white/90 p-5 shadow-soft transition-colors dark:border-slate-800 dark:bg-slate-900/90">
+    <section className="rounded-xl border border-slate-200 bg-white/90 p-5 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
       <div className="mb-4 flex items-center gap-2">
         <Clock3 size={18} className="text-cyan-700 dark:text-teal-300" />
-        <h2 className="text-lg font-black text-slate-900 dark:text-slate-50">期限が近い順</h2>
+        <h2 className="text-lg font-bold text-slate-900 dark:text-slate-50">期限が近い順</h2>
       </div>
       <div className="grid gap-2">
         {rows.length > 0 ? (
@@ -41,18 +41,18 @@ export function ExpiryList({ mode = "all" }: ExpiryListProps) {
               key={food.id}
               type="button"
               onClick={() => selectFood(food.id)}
-              className={clsx("focus-ring flex items-center justify-between gap-3 rounded-2xl border px-3 py-3 text-left", statusClass(status.state))}
+              className={clsx("focus-ring flex items-center justify-between gap-3 rounded-lg border px-3 py-3 text-left", statusClass(status.state))}
             >
               <span className="flex min-w-0 items-center gap-2">
                 <span className="text-xl" aria-hidden="true">
                   {food.icon}
                 </span>
                 <span className="min-w-0">
-                  <span className="block truncate font-black text-slate-900 dark:text-slate-50">{food.name}</span>
+                  <span className="block truncate font-semibold text-slate-900 dark:text-slate-50">{food.name}</span>
                   <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{status.kind === "consume" ? "消費期限" : "賞味期限"}</span>
                 </span>
               </span>
-              <span className="shrink-0 text-right text-sm font-black">
+              <span className="shrink-0 text-right text-sm font-semibold">
                 <span className="block">{compactDate(status.date)}</span>
                 <span className="text-xs">{status.label}</span>
               </span>

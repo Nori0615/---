@@ -125,14 +125,14 @@ export function FoodForm() {
       <div className="grid gap-5">
         {favoriteFoods.length > 0 && !editingFood ? (
           <section>
-            <p className="mb-2 text-sm font-black text-slate-700 dark:text-slate-200">よく使う食材</p>
+            <p className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">よく使う食材</p>
             <div className="flex gap-2 overflow-x-auto pb-1">
               {favoriteFoods.map((food) => (
                 <button
                   key={food.id}
                   type="button"
                   onClick={() => applyFavorite(food.name)}
-                  className="focus-ring inline-flex shrink-0 items-center gap-2 rounded-2xl border border-cyan-100 bg-cyan-50 px-3 py-2 text-sm font-bold text-cyan-900 transition-colors dark:border-teal-900/70 dark:bg-teal-950/60 dark:text-teal-100"
+                  className="focus-ring inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-800 transition-colors dark:border-teal-900/70 dark:bg-teal-950/60 dark:text-teal-100"
                 >
                   <span aria-hidden="true">{food.icon}</span>
                   {food.name}
@@ -172,7 +172,7 @@ export function FoodForm() {
         </div>
 
         <div className="grid gap-2">
-          <p className="text-sm font-black text-slate-700 dark:text-slate-200">数量</p>
+          <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">数量</p>
           <div className="flex items-center gap-2">
             <Button variant="secondary" size="icon" onClick={() => setDraft({ ...draft, quantity: Math.max(0, draft.quantity - 1) })}>
               -
@@ -183,7 +183,7 @@ export function FoodForm() {
               step="0.5"
               value={draft.quantity}
               onChange={(event) => setDraft({ ...draft, quantity: Number(event.target.value) })}
-              className="focus-ring w-28 rounded-2xl border border-cyan-100 bg-white px-4 py-3 text-center text-lg font-black text-slate-900 transition-colors dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+              className="focus-ring w-28 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-center text-base font-semibold text-slate-900 transition-colors dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
               aria-label="数量"
             />
             <Button variant="secondary" size="icon" onClick={() => setDraft({ ...draft, quantity: draft.quantity + 1 })}>
@@ -193,14 +193,14 @@ export function FoodForm() {
         </div>
 
         <section>
-          <p className="mb-2 text-sm font-black text-slate-700 dark:text-slate-200">保存場所</p>
+          <p className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">保存場所</p>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {areas.map((area) => (
               <button
                 key={area.id}
                 type="button"
                 onClick={() => setDraft({ ...draft, areaId: area.id })}
-                className={`focus-ring rounded-2xl border px-3 py-3 text-left text-sm font-bold ${
+                className={`focus-ring rounded-lg border px-3 py-2.5 text-left text-sm font-semibold ${
                   draft.areaId === area.id
                     ? "border-cyan-500 bg-cyan-50 text-cyan-900 dark:border-teal-400 dark:bg-teal-950/70 dark:text-teal-100"
                     : "border-cyan-100 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
@@ -246,14 +246,14 @@ export function FoodForm() {
 
         <section className="grid gap-3 sm:grid-cols-2">
           <div>
-            <p className="mb-2 text-sm font-black text-slate-700 dark:text-slate-200">アイコン</p>
+            <p className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">アイコン</p>
             <div className="flex flex-wrap gap-2">
               {icons.map((icon) => (
                 <button
                   key={icon}
                   type="button"
                   onClick={() => setDraft({ ...draft, icon })}
-                  className={`focus-ring grid h-10 w-10 place-items-center rounded-2xl border text-lg ${
+                  className={`focus-ring grid h-10 w-10 place-items-center rounded-lg border text-lg ${
                     draft.icon === icon ? "border-cyan-500 bg-cyan-50 dark:border-teal-400 dark:bg-teal-950/70" : "border-cyan-100 bg-white dark:border-slate-700 dark:bg-slate-950"
                   }`}
                   aria-label={`${icon}を選択`}
@@ -264,14 +264,14 @@ export function FoodForm() {
             </div>
           </div>
           <div>
-            <p className="mb-2 text-sm font-black text-slate-700 dark:text-slate-200">色</p>
+            <p className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">色</p>
             <div className="flex flex-wrap gap-2">
               {colors.map((color) => (
                 <button
                   key={color}
                   type="button"
                   onClick={() => setDraft({ ...draft, color })}
-                  className="focus-ring h-10 w-10 rounded-2xl border-2"
+                  className="focus-ring h-10 w-10 rounded-lg border-2"
                   style={{ backgroundColor: color, borderColor: draft.color === color ? "#0891b2" : "white" }}
                   aria-label={`${color}を選択`}
                 />
@@ -285,7 +285,7 @@ export function FoodForm() {
           <textarea
             value={draft.memo ?? ""}
             onChange={(event) => setDraft({ ...draft, memo: event.target.value })}
-            className="focus-ring min-h-24 rounded-2xl border border-cyan-100 bg-white px-4 py-3 text-base font-medium text-slate-800 shadow-sm transition-colors dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+            className="focus-ring min-h-24 rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-[15px] font-normal text-slate-800 shadow-sm transition-colors dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
             placeholder="使い道、買った場所、下味など"
           />
         </label>
@@ -296,7 +296,7 @@ export function FoodForm() {
             ["isOpened", "開封済み", "早めに使いたい目印になります"],
             ["isPriority", "優先", "今日見ておきたい欄に出ます"],
           ].map(([key, label, helper]) => (
-            <label key={key} className="flex cursor-pointer gap-3 rounded-2xl border border-cyan-100 bg-white px-3 py-3 transition-colors dark:border-slate-700 dark:bg-slate-950">
+            <label key={key} className="flex cursor-pointer gap-3 rounded-lg border border-slate-200 bg-white px-3 py-3 transition-colors dark:border-slate-700 dark:bg-slate-950">
               <input
                 type="checkbox"
                 checked={Boolean(draft[key as keyof FoodDraft])}
@@ -304,7 +304,7 @@ export function FoodForm() {
                 className="mt-1 h-4 w-4 accent-cyan-700"
               />
               <span>
-                <span className="flex items-center gap-1 text-sm font-black text-slate-800 dark:text-slate-100">
+                <span className="flex items-center gap-1 text-sm font-semibold text-slate-800 dark:text-slate-100">
                   {label}
                   {key === "isFavorite" ? <Star size={14} className="text-amber-500" /> : null}
                 </span>

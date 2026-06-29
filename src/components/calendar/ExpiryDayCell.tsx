@@ -17,7 +17,7 @@ export function ExpiryDayCell({ day, anchor, foods, warningDays, onSelectFood }:
   return (
     <div
       className={clsx(
-        "min-h-28 rounded-2xl border p-2",
+        "min-h-28 rounded-lg border p-2",
         isSameMonth(day, anchor)
           ? "border-cyan-100 bg-white/90 dark:border-slate-700 dark:bg-slate-950/60"
           : "border-slate-100 bg-slate-50/60 text-slate-400 dark:border-slate-800 dark:bg-slate-950/30 dark:text-slate-500",
@@ -25,10 +25,10 @@ export function ExpiryDayCell({ day, anchor, foods, warningDays, onSelectFood }:
       )}
     >
       <div className="mb-2 flex items-center justify-between">
-        <span className={clsx("grid h-7 w-7 place-items-center rounded-full text-sm font-black", today ? "bg-cyan-700 text-white" : "text-slate-700 dark:text-slate-300")}>
+        <span className={clsx("grid h-7 w-7 place-items-center rounded-md text-sm font-semibold", today ? "bg-cyan-700 text-white" : "text-slate-700 dark:text-slate-300")}>
           {format(day, "d")}
         </span>
-        {foods.length > 0 ? <span className="rounded-full bg-cyan-50 px-2 py-0.5 text-[11px] font-black text-cyan-800 dark:bg-teal-950 dark:text-teal-200">{foods.length}</span> : null}
+        {foods.length > 0 ? <span className="rounded-md bg-cyan-50 px-2 py-0.5 text-[11px] font-semibold text-cyan-800 dark:bg-teal-950 dark:text-teal-200">{foods.length}</span> : null}
       </div>
       <div className="grid gap-1">
         {foods.slice(0, 4).map((food) => {
@@ -40,7 +40,7 @@ export function ExpiryDayCell({ day, anchor, foods, warningDays, onSelectFood }:
               type="button"
               onClick={() => onSelectFood(food.id)}
               className={clsx(
-                "focus-ring flex items-center gap-1 rounded-xl px-2 py-1 text-left text-[11px] font-black",
+                "focus-ring flex items-center gap-1 rounded-md px-2 py-1 text-left text-[11px] font-semibold",
                 status.state === "expired" && "bg-rose-50 text-rose-800 dark:bg-rose-950/60 dark:text-rose-200",
                 status.state === "today" && "bg-orange-50 text-orange-800 dark:bg-orange-950/60 dark:text-orange-200",
                 status.state === "soon" && "bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-200",

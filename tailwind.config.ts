@@ -7,17 +7,22 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: [
-          "Inter",
-          "ui-sans-serif",
-          "system-ui",
+          "Noto Sans JP",
+          "Yu Gothic UI",
+          "Yu Gothic",
+          "Hiragino Sans",
+          "Hiragino Kaku Gothic ProN",
+          "Meiryo",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",
+          "system-ui",
+          "ui-sans-serif",
           "sans-serif",
         ],
       },
       boxShadow: {
-        soft: "0 18px 45px rgba(35, 76, 99, 0.12)",
+        soft: "0 10px 28px rgba(15, 23, 42, 0.08)",
       },
     },
   },
