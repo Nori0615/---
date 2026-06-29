@@ -49,7 +49,7 @@ export function FridgeArea({
         editing && "cursor-pointer",
         activeDrop && "border-teal-500 ring-4 ring-teal-300/35",
         selected && !activeDrop && "border-slate-900 ring-4 ring-slate-900/10 dark:border-slate-100 dark:ring-slate-100/15",
-        !activeDrop && !selected && "border-white/80 dark:border-slate-700/70",
+        !activeDrop && !selected && "border-slate-200/70 dark:border-slate-700/70",
       )}
       style={{
         left: `${area.x}%`,
@@ -61,7 +61,7 @@ export function FridgeArea({
       aria-label={`${area.name}エリア`}
     >
       <div className="mb-1.5 flex items-center justify-between gap-2 text-[11px] font-semibold text-slate-700 dark:text-slate-200">
-        <span className="flex min-w-0 items-center gap-1 truncate">
+        <span className="flex min-w-0 items-center gap-1 truncate rounded-md bg-white/55 px-1.5 py-0.5 shadow-sm backdrop-blur-sm dark:bg-slate-950/45">
           <Icon size={13} className="text-slate-500 dark:text-slate-300" aria-hidden="true" />
           <span className="truncate">{area.name}</span>
         </span>
