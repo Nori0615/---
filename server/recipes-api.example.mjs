@@ -1,4 +1,20 @@
 import http from "node:http";
+import fs from "node:fs";
+
+function loadLocalEnv() {
+  if (!fs.existsSync(".env.local")) return;
+
+  const lines = fs.readFileSync(".env.local", "utf8").split(/\r?\n/);
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#") || !trimmed.includes("=")) continue;
+    const [key, ...valueParts] = trimmed.split("=");
+    if (process.env[key]) continue;
+    process.env[key] = valueParts.join("=").replace(/^["']|["']$/g, "");
+  }
+}
+
+loadLocalEnv();
 
 const port = Number(process.env.RECIPE_API_PORT || 8787);
 const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
