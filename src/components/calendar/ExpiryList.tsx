@@ -5,7 +5,6 @@ import { useSettingsStore } from "../../store/settingsStore";
 import { useUiStore } from "../../store/uiStore";
 import { compactDate } from "../../utils/date";
 import { getFoodStatus, statusClass } from "../../utils/foodStatus";
-import { EmptyState } from "../ui/EmptyState";
 
 interface ExpiryListProps {
   mode?: "all" | "expired" | "today" | "threeDays" | "week";
@@ -58,9 +57,7 @@ export function ExpiryList({ mode = "all" }: ExpiryListProps) {
               </span>
             </button>
           ))
-        ) : (
-          <EmptyState title="表示する期限はありません">期限なしの食材は一覧画面から確認できます。</EmptyState>
-        )}
+        ) : null}
       </div>
     </section>
   );

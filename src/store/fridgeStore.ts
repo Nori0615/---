@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { db } from "../db/dexie";
 import type { AreaType, FridgeArea } from "../types";
-import { compactAreas, createArea, defaultAreas } from "../utils/layout";
+import { avoidAreaOverlaps, compactAreas, createArea, defaultAreas } from "../utils/layout";
 
 interface FridgeState {
   areas: FridgeArea[];
@@ -33,6 +33,44 @@ async function replaceAreas(areas: FridgeArea[]) {
   });
 }
 
+async function collapseDuplicatedTemplateAreas(areas: FridgeArea[]) {
+  if (areas.length <= 10) return areas;
+
+  const groups = new Map<string, FridgeArea[]>();
+  for (const area of areas) {
+    const key = `${area.type}:${area.name}:${area.icon}:${area.color}`;
+    groups.set(key, [...(groups.get(key) ?? []), area]);
+  }
+
+  const duplicateGroups = [...groups.values()].filter((group) => group.length > 1);
+  if (duplicateGroups.length < 3) return areas;
+
+  const removeToKeep = new Map<string, string>();
+  const kept = [...areas]
+    .sort((a, b) => a.order - b.order)
+    .filter((area) => {
+      const key = `${area.type}:${area.name}:${area.icon}:${area.color}`;
+      const group = groups.get(key);
+      if (!group || group[0].id === area.id) return true;
+      removeToKeep.set(area.id, group[0].id);
+      return false;
+    })
+    .map((area, index) => ({ ...area, order: index + 1, updatedAt: new Date().toISOString() }));
+
+  if (removeToKeep.size === 0) return areas;
+
+  const now = new Date().toISOString();
+  await db.transaction("rw", db.areas, db.foods, async () => {
+    for (const [removedId, keepId] of removeToKeep) {
+      await db.foods.where("areaId").equals(removedId).modify({ areaId: keepId, updatedAt: now });
+      await db.areas.delete(removedId);
+    }
+    await db.areas.bulkPut(kept);
+  });
+
+  return kept;
+}
+
 export const useFridgeStore = create<FridgeState>((set, get) => ({
   areas: [],
   loading: true,
@@ -44,6 +82,9 @@ export const useFridgeStore = create<FridgeState>((set, get) => ({
         areas = defaultAreas();
         await db.areas.bulkPut(areas);
       }
+      areas = await collapseDuplicatedTemplateAreas(areas);
+      areas = avoidAreaOverlaps(areas);
+      await db.areas.bulkPut(areas);
       set({ areas, loading: false });
       return areas;
     } catch {
@@ -53,15 +94,20 @@ export const useFridgeStore = create<FridgeState>((set, get) => ({
   },
   addArea: async (type) => {
     const nextArea = createArea(type, get().areas.length + 1);
-    await db.areas.put(nextArea);
-    set((state) => ({ areas: [...state.areas, nextArea].sort((a, b) => a.order - b.order) }));
+    const areas = avoidAreaOverlaps([...get().areas, nextArea]);
+    await db.areas.bulkPut(areas);
+    set({ areas });
   },
   updateArea: async (id, patch) => {
     const current = get().areas.find((area) => area.id === id);
     if (!current) return;
     const next = { ...current, ...patch, updatedAt: new Date().toISOString() };
-    await db.areas.put(next);
-    set((state) => ({ areas: state.areas.map((area) => (area.id === id ? next : area)).sort((a, b) => a.order - b.order) }));
+    const areas = avoidAreaOverlaps(
+      get().areas.map((area) => (area.id === id ? next : area)),
+      id,
+    );
+    await db.areas.bulkPut(areas);
+    set({ areas });
   },
   deleteArea: async (id) => {
     const areas = get().areas;

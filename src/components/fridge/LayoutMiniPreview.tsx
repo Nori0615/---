@@ -106,7 +106,7 @@ export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = fals
 
       {!compact ? (
         <p className="mt-2 truncate text-xs font-bold text-slate-500 dark:text-slate-400">
-          {selectedArea ? `${areaTypeLabel(selectedArea.type)} / ${Math.round(selectedArea.width)} x ${Math.round(selectedArea.height)}` : "クリックで選択できます"}
+          {selectedArea ? `${areaTypeLabel(selectedArea.type)} / ${Math.round(selectedArea.width)} x ${Math.round(selectedArea.height)}` : "未選択"}
         </p>
       ) : null}
     </section>

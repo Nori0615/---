@@ -50,8 +50,8 @@ export function LayoutEditorPage() {
         compact
         selectedAreaId={selectedArea?.id}
         onSelectArea={setSelectedAreaId}
-        storageKey="fridgely-layout-preview-mobile"
-        defaultWidth={84}
+        storageKey="fridgely-layout-preview-mobile-v2"
+        defaultWidth={72}
         minWidth={68}
         maxWidth={150}
         className="xl:hidden"
@@ -70,9 +70,6 @@ export function LayoutEditorPage() {
         <div className="min-w-0">
           <p className="text-sm font-semibold text-teal-700 dark:text-teal-300">Layout</p>
           <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50">レイアウトを整える</h2>
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300">
-            エリアを選んで、ボタンで位置や大きさを調整できます。細かくしたい時だけスライダーを開いてください。
-          </p>
         </div>
         <div className="flex w-full flex-wrap gap-2 sm:w-auto">
           <Button variant="secondary" onClick={() => void applyTemplate("family").then(() => showToast("ファミリーテンプレートに変更しました"))}>
@@ -92,9 +89,6 @@ export function LayoutEditorPage() {
       <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(320px,560px)_1fr]">
         <div className="grid min-w-0 content-start gap-3">
           <FridgeCanvas mode="editor" selectedAreaId={selectedArea?.id} onSelectArea={setSelectedAreaId} />
-          <p className="rounded-lg bg-slate-100 px-4 py-3 text-sm font-medium leading-6 text-slate-600 transition-colors dark:bg-slate-900 dark:text-slate-300">
-            冷蔵庫内のエリアをクリックすると、右側の編集カードが切り替わります。
-          </p>
         </div>
 
         <aside className="grid min-w-0 content-start gap-4">

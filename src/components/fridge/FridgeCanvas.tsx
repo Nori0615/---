@@ -220,12 +220,6 @@ export function FridgeCanvas({ search = "", onSearchChange, mode = "view", selec
               ) : null}
             </div>
           </section>
-          <section className={clsx("rounded-xl border border-emerald-100 bg-emerald-50/70 transition-colors dark:border-teal-900/70 dark:bg-teal-950/30", compactDensity ? "p-4" : "p-5")}>
-            <h2 className="text-base font-bold text-slate-900 dark:text-slate-50">動かし方</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
-              食材カードを指やマウスで押したまま動かすと、移動先のエリアが光ります。離すと保存場所が自動で保存されます。
-            </p>
-          </section>
         </aside>
       ) : null}
 

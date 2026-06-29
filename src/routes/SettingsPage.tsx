@@ -152,7 +152,6 @@ export function SettingsPage() {
 
       <section className="rounded-xl border border-slate-200 bg-white/90 p-5 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
         <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50">データ</h3>
-        <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">クラウド同期は使わず、IndexedDBにローカル保存しています。</p>
         <div className="mt-4 flex flex-wrap gap-2">
           <Button onClick={() => void download()}>
             <Download size={18} />
@@ -172,13 +171,6 @@ export function SettingsPage() {
             全データ削除
           </Button>
         </div>
-      </section>
-
-      <section className="rounded-xl border border-teal-100 bg-teal-50/70 p-5 transition-colors dark:border-teal-900/70 dark:bg-teal-950/30">
-        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50">PWA / オフライン</h3>
-        <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
-          ビルド後はService WorkerとWeb App Manifestでオフライン起動に対応します。スマホではブラウザの「ホーム画面に追加」からアプリのように使えます。
-        </p>
       </section>
     </div>
   );

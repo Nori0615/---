@@ -47,9 +47,9 @@ export function QuickAddFood() {
           入力
         </Button>
       </div>
-      <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
-        {favorites.length > 0 ? (
-          favorites.map((food) => (
+      {favorites.length > 0 ? (
+        <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+          {favorites.map((food) => (
             <button
               key={food.id}
               type="button"
@@ -59,11 +59,9 @@ export function QuickAddFood() {
               <span aria-hidden="true">{food.icon}</span>
               {food.name}
             </button>
-          ))
-        ) : (
-          <p className="text-sm text-slate-500 dark:text-slate-400">食材を「よく使う」にするとここからワンタップで追加できます。</p>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : null}
     </section>
   );
 }

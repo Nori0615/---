@@ -14,6 +14,7 @@ export function ExpiryCalendar() {
   const settings = useSettingsStore((state) => state.settings);
   const updateSettings = useSettingsStore((state) => state.updateSettings);
   const selectFood = useUiStore((state) => state.selectFood);
+  const openFoodForm = useUiStore((state) => state.openFoodForm);
   const [anchor, setAnchor] = useState(new Date());
   const view = settings?.calendarView ?? "month";
   const warningDays = settings?.warningDays ?? 7;
@@ -97,6 +98,7 @@ export function ExpiryCalendar() {
               foods={foodByDate.get(key) ?? []}
               warningDays={warningDays}
               onSelectFood={selectFood}
+              onAddFood={(date) => openFoodForm(undefined, { expireDate: date })}
             />
           );
         })}

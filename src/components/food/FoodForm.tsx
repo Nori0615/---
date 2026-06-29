@@ -39,9 +39,10 @@ export function FoodForm() {
   const updateFood = useFoodStore((state) => state.updateFood);
   const foodFormOpen = useUiStore((state) => state.foodFormOpen);
   const editingFoodId = useUiStore((state) => state.editingFoodId);
+  const foodFormDefaults = useUiStore((state) => state.foodFormDefaults);
   const closeFoodForm = useUiStore((state) => state.closeFoodForm);
   const showToast = useUiStore((state) => state.showToast);
-  const defaultAreaId = areas[0]?.id ?? "";
+  const defaultAreaId = foodFormDefaults?.areaId ?? areas[0]?.id ?? "";
   const editingFood = foods.find((food) => food.id === editingFoodId);
   const [draft, setDraft] = useState<FoodDraft>(blankDraft(defaultAreaId));
 
@@ -64,9 +65,9 @@ export function FoodForm() {
         isPriority: editingFood.isPriority,
       });
     } else {
-      setDraft(blankDraft(defaultAreaId));
+      setDraft({ ...blankDraft(defaultAreaId), ...foodFormDefaults });
     }
-  }, [defaultAreaId, editingFood, foodFormOpen]);
+  }, [defaultAreaId, editingFood, foodFormDefaults, foodFormOpen]);
 
   const nameCandidates = useMemo(() => [...new Set(foods.map((food) => food.name))].slice(0, 24), [foods]);
   const favoriteFoods = useMemo(() => foods.filter((food) => food.isFavorite).slice(0, 6), [foods]);
@@ -292,10 +293,10 @@ export function FoodForm() {
 
         <section className="grid gap-2 sm:grid-cols-3">
           {[
-            ["isFavorite", "よく使う", "次回ワンタップ追加できます"],
-            ["isOpened", "開封済み", "早めに使いたい目印になります"],
-            ["isPriority", "優先", "今日見ておきたい欄に出ます"],
-          ].map(([key, label, helper]) => (
+            ["isFavorite", "よく使う"],
+            ["isOpened", "開封済み"],
+            ["isPriority", "優先"],
+          ].map(([key, label]) => (
             <label key={key} className="flex cursor-pointer gap-3 rounded-lg border border-slate-200 bg-white px-3 py-3 transition-colors dark:border-slate-700 dark:bg-slate-950">
               <input
                 type="checkbox"
@@ -308,7 +309,6 @@ export function FoodForm() {
                   {label}
                   {key === "isFavorite" ? <Star size={14} className="text-amber-500" /> : null}
                 </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400">{helper}</span>
               </span>
             </label>
           ))}

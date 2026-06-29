@@ -1,6 +1,12 @@
 import type { AreaType, FridgeArea } from "../types";
 import { createId } from "./id";
 
+const AREA_GAP = 1.5;
+const MIN_AREA_WIDTH = 12;
+const MIN_AREA_HEIGHT = 8;
+const MAX_AREA_WIDTH = 90;
+const MAX_AREA_HEIGHT = 50;
+
 const areaMeta: Record<AreaType, { name: string; icon: string; color: string }> = {
   refrigerator: { name: "冷蔵室", icon: "Snowflake", color: "#e9f8ff" },
   freezer: { name: "冷凍室", icon: "CloudSnow", color: "#edf2ff" },
@@ -53,4 +59,89 @@ export function compactAreas(): FridgeArea[] {
     createArea("freezer", 3, { name: "冷凍室", x: 7, y: 79, width: 62, height: 15, color: "#edf2ff" }),
     createArea("door", 4, { name: "ドアポケット", x: 73, y: 9, width: 19, height: 66, color: "#fff6d8" }),
   ];
+}
+
+function roundLayout(value: number) {
+  return Math.round(value * 10) / 10;
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function clampArea(area: FridgeArea): FridgeArea {
+  const width = roundLayout(clamp(area.width, MIN_AREA_WIDTH, MAX_AREA_WIDTH));
+  const height = roundLayout(clamp(area.height, MIN_AREA_HEIGHT, MAX_AREA_HEIGHT));
+  return {
+    ...area,
+    width,
+    height,
+    x: roundLayout(clamp(area.x, 0, 100 - width)),
+    y: roundLayout(clamp(area.y, 0, 100 - height)),
+  };
+}
+
+function overlaps(a: FridgeArea, b: FridgeArea) {
+  return a.x < b.x + b.width + AREA_GAP && a.x + a.width + AREA_GAP > b.x && a.y < b.y + b.height + AREA_GAP && a.y + a.height + AREA_GAP > b.y;
+}
+
+function fits(area: FridgeArea, blockers: FridgeArea[]) {
+  return blockers.every((blocker) => !overlaps(area, blocker));
+}
+
+function nearestFreeArea(area: FridgeArea, blockers: FridgeArea[]) {
+  const candidates: FridgeArea[] = [];
+  const step = 2;
+  for (let y = 0; y <= 100 - area.height; y += step) {
+    for (let x = 0; x <= 100 - area.width; x += step) {
+      candidates.push({ ...area, x: roundLayout(x), y: roundLayout(y) });
+    }
+  }
+
+  const freeCandidates = candidates.filter((candidate) => fits(candidate, blockers));
+  if (freeCandidates.length === 0) return undefined;
+
+  return freeCandidates
+    .sort((a, b) => {
+      const scoreA = Math.abs(a.x - area.x) * 0.8 + Math.abs(a.y - area.y);
+      const scoreB = Math.abs(b.x - area.x) * 0.8 + Math.abs(b.y - area.y);
+      return scoreA - scoreB;
+    })[0];
+}
+
+function findFreeArea(area: FridgeArea, blockers: FridgeArea[]) {
+  const clamped = clampArea(area);
+  if (fits(clamped, blockers)) return clamped;
+
+  const fitted = nearestFreeArea(clamped, blockers);
+  if (fitted) return fitted;
+
+  for (const scale of [0.85, 0.7, 0.55, 0.4]) {
+    const resized = clampArea({
+      ...clamped,
+      width: Math.max(MIN_AREA_WIDTH, clamped.width * scale),
+      height: Math.max(MIN_AREA_HEIGHT, clamped.height * scale),
+    });
+    const resizedFit = nearestFreeArea(resized, blockers);
+    if (resizedFit) return resizedFit;
+  }
+
+  return clamped;
+}
+
+export function avoidAreaOverlaps(areas: FridgeArea[], anchorId?: string) {
+  const ordered = [...areas].sort((a, b) => {
+    if (a.id === anchorId) return -1;
+    if (b.id === anchorId) return 1;
+    return a.order - b.order;
+  });
+  const placed: FridgeArea[] = [];
+
+  for (const area of ordered) {
+    placed.push(findFreeArea(area, placed));
+  }
+
+  return areas
+    .map((area) => placed.find((placedArea) => placedArea.id === area.id) ?? area)
+    .sort((a, b) => a.order - b.order);
 }

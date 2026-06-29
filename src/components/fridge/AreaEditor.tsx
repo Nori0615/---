@@ -44,6 +44,11 @@ export function AreaEditor({ area, active, canMoveUp, canMoveDown, onSelect, onC
   const presets = [
     { label: "左棚", patch: { x: 8, width: 58 } },
     { label: "ドア", patch: { x: 72, width: 20 } },
+    { label: "2列左", patch: { x: 8, width: 27 } },
+    { label: "2列右", patch: { x: 39, width: 27 } },
+    { label: "3列左", patch: { x: 8, width: 17.5 } },
+    { label: "3列中", patch: { x: 28.3, width: 17.5 } },
+    { label: "3列右", patch: { x: 48.5, width: 17.5 } },
     { label: "広め", patch: { width: 66, height: 18 } },
     { label: "浅め", patch: { height: 11 } },
   ];

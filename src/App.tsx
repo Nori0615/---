@@ -5,10 +5,9 @@ import { useFoodStore } from "./store/foodStore";
 import { useFridgeStore } from "./store/fridgeStore";
 import { useSettingsStore } from "./store/settingsStore";
 import { CalendarPage } from "./routes/CalendarPage";
-import { DashboardPage } from "./routes/DashboardPage";
-import { FoodListPage } from "./routes/FoodListPage";
 import { HomePage } from "./routes/HomePage";
 import { LayoutEditorPage } from "./routes/LayoutEditorPage";
+import { RecipesPage } from "./routes/RecipesPage";
 import { SettingsPage } from "./routes/SettingsPage";
 
 function App() {
@@ -48,8 +47,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/layout" element={<LayoutEditorPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
-        <Route path="/list" element={<FoodListPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/recipes" element={<RecipesPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
