@@ -68,9 +68,9 @@ export function LayoutEditorPage() {
 
       <div className="grid gap-3 sm:flex sm:flex-wrap sm:items-end sm:justify-between">
         <div className="min-w-0">
-          <p className="text-sm font-black text-teal-700">Layout</p>
-          <h2 className="text-2xl font-black text-slate-900">レイアウトを整える</h2>
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-600">
+          <p className="text-sm font-black text-teal-700 dark:text-teal-300">Layout</p>
+          <h2 className="text-2xl font-black text-slate-900 dark:text-slate-50">レイアウトを整える</h2>
+          <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300">
             エリアを選んで、ボタンで位置や大きさを調整できます。細かくしたい時だけスライダーを開いてください。
           </p>
         </div>
@@ -92,14 +92,14 @@ export function LayoutEditorPage() {
       <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(320px,560px)_1fr]">
         <div className="grid min-w-0 content-start gap-3">
           <FridgeCanvas mode="editor" selectedAreaId={selectedArea?.id} onSelectArea={setSelectedAreaId} />
-          <p className="rounded-2xl bg-slate-100 px-4 py-3 text-sm font-bold leading-6 text-slate-600">
+          <p className="rounded-2xl bg-slate-100 px-4 py-3 text-sm font-bold leading-6 text-slate-600 transition-colors dark:bg-slate-900 dark:text-slate-300">
             冷蔵庫内のエリアをクリックすると、右側の編集カードが切り替わります。
           </p>
         </div>
 
         <aside className="grid min-w-0 content-start gap-4">
-          <section className="rounded-[1.25rem] border border-slate-200 bg-white p-4 shadow-sm">
-            <p className="mb-3 text-sm font-black text-slate-700">エリアを追加</p>
+          <section className="rounded-[1.25rem] border border-slate-200 bg-white p-4 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
+            <p className="mb-3 text-sm font-black text-slate-700 dark:text-slate-200">エリアを追加</p>
             <div className="flex flex-wrap gap-2">
               {AREA_TYPES.map((type) => (
                 <Button key={type} variant="secondary" size="sm" onClick={() => void add(type as AreaType)}>
@@ -110,8 +110,8 @@ export function LayoutEditorPage() {
             </div>
           </section>
 
-          <section className="rounded-[1.25rem] border border-slate-200 bg-white p-4 shadow-sm">
-            <p className="mb-3 text-sm font-black text-slate-700">エリア一覧</p>
+          <section className="rounded-[1.25rem] border border-slate-200 bg-white p-4 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
+            <p className="mb-3 text-sm font-black text-slate-700 dark:text-slate-200">エリア一覧</p>
             <div className="grid gap-3">
               {areas.map((area, index) => (
                 <AreaEditor

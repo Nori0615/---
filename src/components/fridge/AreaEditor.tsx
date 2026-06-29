@@ -51,13 +51,15 @@ export function AreaEditor({ area, active, canMoveUp, canMoveDown, onSelect, onC
   return (
     <section
       className={`rounded-[1.25rem] border bg-white shadow-sm transition ${
-        active ? "border-slate-900 ring-4 ring-slate-900/5" : "border-slate-200 hover:border-slate-300"
+        active
+          ? "border-slate-900 ring-4 ring-slate-900/5 dark:border-slate-100 dark:bg-slate-900 dark:ring-slate-100/10"
+          : "border-slate-200 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700"
       }`}
     >
       <button type="button" onClick={() => onSelect(area.id)} className="focus-ring flex w-full items-center justify-between gap-3 rounded-[1.25rem] p-4 text-left">
         <span className="min-w-0">
-          <span className="block truncate text-base font-black text-slate-900">{area.name}</span>
-          <span className="mt-1 block text-xs font-bold text-slate-500">
+          <span className="block truncate text-base font-black text-slate-900 dark:text-slate-50">{area.name}</span>
+          <span className="mt-1 block text-xs font-bold text-slate-500 dark:text-slate-400">
             {areaTypeLabel(area.type)} ・ {Math.round(area.width)} x {Math.round(area.height)}
           </span>
         </span>
@@ -65,7 +67,7 @@ export function AreaEditor({ area, active, canMoveUp, canMoveDown, onSelect, onC
       </button>
 
       {active ? (
-        <div className="grid gap-4 border-t border-slate-100 px-4 pb-4 pt-3">
+        <div className="grid gap-4 border-t border-slate-100 px-4 pb-4 pt-3 dark:border-slate-800">
           <Input label="名前" value={area.name} onChange={(event) => update({ name: event.target.value })} />
 
           <div className="grid gap-3 sm:grid-cols-2">
@@ -79,7 +81,7 @@ export function AreaEditor({ area, active, canMoveUp, canMoveDown, onSelect, onC
           </div>
 
           <div>
-            <p className="mb-2 text-sm font-black text-slate-700">かんたん配置</p>
+            <p className="mb-2 text-sm font-black text-slate-700 dark:text-slate-200">かんたん配置</p>
             <div className="flex flex-wrap gap-2">
               {presets.map((preset) => (
                 <Button key={preset.label} variant="secondary" size="sm" onClick={() => update(preset.patch)}>
@@ -90,8 +92,8 @@ export function AreaEditor({ area, active, canMoveUp, canMoveDown, onSelect, onC
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-2xl bg-slate-50 p-3">
-              <p className="mb-2 text-sm font-black text-slate-700">位置</p>
+            <div className="rounded-2xl bg-slate-50 p-3 transition-colors dark:bg-slate-950">
+              <p className="mb-2 text-sm font-black text-slate-700 dark:text-slate-200">位置</p>
               <div className="grid grid-cols-3 gap-2">
                 <span />
                 <Button variant="secondary" size="icon" onClick={() => nudge(0, -3)} aria-label="上へ少し移動">
@@ -110,8 +112,8 @@ export function AreaEditor({ area, active, canMoveUp, canMoveDown, onSelect, onC
               </div>
             </div>
 
-            <div className="rounded-2xl bg-slate-50 p-3">
-              <p className="mb-2 text-sm font-black text-slate-700">サイズ</p>
+            <div className="rounded-2xl bg-slate-50 p-3 transition-colors dark:bg-slate-950">
+              <p className="mb-2 text-sm font-black text-slate-700 dark:text-slate-200">サイズ</p>
               <div className="grid gap-2 sm:grid-cols-2">
                 <Button variant="secondary" size="sm" onClick={() => resize(4, 0)}>
                   <ArrowRight size={16} />
@@ -133,8 +135,8 @@ export function AreaEditor({ area, active, canMoveUp, canMoveDown, onSelect, onC
             </div>
           </div>
 
-          <details className="rounded-2xl border border-slate-200 bg-white p-3">
-            <summary className="cursor-pointer text-sm font-black text-slate-700">細かく調整</summary>
+          <details className="rounded-2xl border border-slate-200 bg-white p-3 transition-colors dark:border-slate-700 dark:bg-slate-950">
+            <summary className="cursor-pointer text-sm font-black text-slate-700 dark:text-slate-200">細かく調整</summary>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <Input label={`横位置 ${area.x}`} type="range" min="0" max="90" value={area.x} onChange={(event) => update({ x: numberValue(event) })} />
               <Input label={`縦位置 ${area.y}`} type="range" min="0" max="92" value={area.y} onChange={(event) => update({ y: numberValue(event) })} />

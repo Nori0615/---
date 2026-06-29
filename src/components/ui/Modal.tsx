@@ -29,14 +29,14 @@ export function Modal({ open, title, children, onClose, description }: ModalProp
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className="max-h-[92vh] w-full overflow-hidden rounded-t-[1.75rem] bg-white shadow-soft sm:max-w-2xl sm:rounded-[1.75rem]"
+        className="max-h-[92vh] w-full overflow-hidden rounded-t-[1.75rem] bg-white shadow-soft transition-colors dark:bg-slate-900 sm:max-w-2xl sm:rounded-[1.75rem]"
       >
-        <div className="flex items-start justify-between gap-4 border-b border-cyan-100 px-5 py-4">
+        <div className="flex items-start justify-between gap-4 border-b border-cyan-100 px-5 py-4 transition-colors dark:border-slate-800">
           <div>
-            <h2 id="modal-title" className="text-lg font-black text-slate-900">
+            <h2 id="modal-title" className="text-lg font-black text-slate-900 dark:text-slate-50">
               {title}
             </h2>
-            {description ? <p className="mt-1 text-sm text-slate-500">{description}</p> : null}
+            {description ? <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{description}</p> : null}
           </div>
           <Button variant="ghost" size="icon" onClick={onClose} aria-label="閉じる">
             <X size={20} />

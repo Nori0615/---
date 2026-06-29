@@ -39,8 +39,8 @@ export function DashboardPage() {
   return (
     <div className="grid gap-5">
       <div>
-        <p className="text-sm font-black text-cyan-700">Dashboard</p>
-        <h2 className="text-2xl font-black text-slate-900">冷蔵庫の今</h2>
+        <p className="text-sm font-black text-cyan-700 dark:text-teal-300">Dashboard</p>
+        <h2 className="text-2xl font-black text-slate-900 dark:text-slate-50">冷蔵庫の今</h2>
       </div>
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard label="登録食材" value={foods.length} helper="冷蔵庫に入っている数" icon={Refrigerator} tone="cyan" />
@@ -55,10 +55,10 @@ export function DashboardPage() {
       </div>
 
       <div className="grid gap-5 xl:grid-cols-[1fr_360px]">
-        <section className="rounded-[1.75rem] border border-cyan-100 bg-white/82 p-5 shadow-soft">
+        <section className="rounded-[1.75rem] border border-cyan-100 bg-white/90 p-5 shadow-soft transition-colors dark:border-slate-800 dark:bg-slate-900/90">
           <div className="mb-4 flex items-center gap-2">
             <Heart size={18} className="text-rose-500" />
-            <h2 className="text-lg font-black text-slate-900">優先的に使いたい食材</h2>
+            <h2 className="text-lg font-black text-slate-900 dark:text-slate-50">優先的に使いたい食材</h2>
           </div>
           <div className="grid gap-2 sm:grid-cols-2">
             {priority.length > 0 ? (
@@ -69,10 +69,10 @@ export function DashboardPage() {
           </div>
         </section>
 
-        <section className="rounded-[1.75rem] border border-cyan-100 bg-white/82 p-5 shadow-soft">
+        <section className="rounded-[1.75rem] border border-cyan-100 bg-white/90 p-5 shadow-soft transition-colors dark:border-slate-800 dark:bg-slate-900/90">
           <div className="mb-4 flex items-center gap-2">
-            <Boxes size={18} className="text-cyan-700" />
-            <h2 className="text-lg font-black text-slate-900">最近追加</h2>
+            <Boxes size={18} className="text-cyan-700 dark:text-teal-300" />
+            <h2 className="text-lg font-black text-slate-900 dark:text-slate-50">最近追加</h2>
           </div>
           <div className="grid gap-2">
             {recent.map((food) => (

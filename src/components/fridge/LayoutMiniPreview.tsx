@@ -34,23 +34,23 @@ export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = fals
   return (
     <section
       className={clsx(
-        "pointer-events-auto relative rounded-[1.25rem] border border-slate-200/90 bg-white/95 shadow-[0_18px_50px_rgba(15,23,42,0.14)] backdrop-blur",
+        "pointer-events-auto relative rounded-[1.25rem] border border-slate-200/90 bg-white/95 shadow-[0_18px_50px_rgba(15,23,42,0.14)] backdrop-blur transition-colors dark:border-slate-700 dark:bg-slate-900/95",
         compact ? "p-1.5" : "p-3",
         className,
       )}
       aria-label="冷蔵庫レイアウトのミニプレビュー"
     >
       {compact ? (
-        <span className="absolute right-2 top-2 z-20 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white/90 text-slate-700 shadow-sm" aria-hidden="true">
+        <span className="absolute right-2 top-2 z-20 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white/90 text-slate-700 shadow-sm dark:bg-slate-950/90 dark:text-slate-200" aria-hidden="true">
           <PictureInPicture2 size={12} />
         </span>
       ) : (
         <div className="mb-2 flex items-center justify-between gap-2">
           <div className="min-w-0">
-            <p className="text-xs font-black text-teal-700">Preview</p>
-            <p className="truncate text-sm font-black text-slate-900">{selectedArea?.name ?? "エリアを選択"}</p>
+            <p className="text-xs font-black text-teal-700 dark:text-teal-300">Preview</p>
+            <p className="truncate text-sm font-black text-slate-900 dark:text-slate-50">{selectedArea?.name ?? "エリアを選択"}</p>
           </div>
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-700" aria-hidden="true">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200" aria-hidden="true">
             <PictureInPicture2 size={17} />
           </span>
         </div>
@@ -59,12 +59,12 @@ export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = fals
       <div className={clsx("mx-auto aspect-[9/15] w-full", fluid ? "max-w-none" : compact ? "max-w-[72px]" : "max-w-[190px]")}>
         <div
           className={clsx(
-            "relative h-full overflow-hidden border-slate-100 bg-gradient-to-b from-white via-slate-50 to-teal-50 shadow-inner",
+            "relative h-full overflow-hidden border-slate-100 bg-gradient-to-b from-white via-slate-50 to-teal-50 shadow-inner dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-teal-950/80",
             compact ? "rounded-[0.85rem] border-[4px] p-1" : "rounded-[1.05rem] border-[5px] p-1.5",
           )}
         >
-          <div className={clsx("fridge-grid relative h-full overflow-hidden border border-slate-200 bg-white/70", compact ? "rounded-[0.6rem]" : "rounded-[0.8rem]")}>
-            <div className="absolute inset-x-[8%] top-1.5 h-1 rounded-full bg-white shadow-sm" />
+          <div className={clsx("fridge-grid relative h-full overflow-hidden border border-slate-200 bg-white/70 dark:border-slate-700 dark:bg-slate-950/45", compact ? "rounded-[0.6rem]" : "rounded-[0.8rem]")}>
+            <div className="absolute inset-x-[8%] top-1.5 h-1 rounded-full bg-white shadow-sm dark:bg-slate-700" />
             {shelfLines.map((top, index) => (
               <FridgeShelf key={`${top}-${index}`} top={top} />
             ))}
@@ -80,21 +80,21 @@ export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = fals
                   className={clsx(
                     "absolute overflow-hidden border text-left transition hover:brightness-105",
                     compact ? "rounded-[0.25rem]" : "rounded-md",
-                    selected ? "z-10 border-slate-950 ring-2 ring-slate-950/20" : "border-white/80",
+                    selected ? "z-10 border-slate-950 ring-2 ring-slate-950/20 dark:border-slate-100 dark:ring-slate-100/20" : "border-white/80 dark:border-slate-700/70",
                   )}
                   style={{
                     left: `${area.x}%`,
                     top: `${area.y}%`,
                     width: `${area.width}%`,
                     height: `${area.height}%`,
-                    background: `linear-gradient(145deg, ${area.color}, rgba(255,255,255,0.86))`,
+                    background: `linear-gradient(145deg, ${area.color}, var(--fridge-area-bg))`,
                   }}
                   aria-label={`${area.name}を編集対象にする`}
                 >
                   <span className="flex h-full min-h-0 flex-col justify-between p-1">
-                    <span className={compact ? "sr-only" : "truncate text-[10px] font-black text-slate-700"}>{area.name}</span>
+                    <span className={compact ? "sr-only" : "truncate text-[10px] font-black text-slate-700 dark:text-slate-200"}>{area.name}</span>
                     {!compact && count > 0 ? (
-                      <span className="self-end rounded-full bg-white/85 px-1 text-[8px] font-black text-slate-600 shadow-sm">{count}</span>
+                      <span className="self-end rounded-full bg-white/90 px-1 text-[8px] font-black text-slate-600 shadow-sm dark:bg-slate-950/70 dark:text-slate-300">{count}</span>
                     ) : null}
                   </span>
                 </button>
@@ -105,7 +105,7 @@ export function LayoutMiniPreview({ selectedAreaId, onSelectArea, compact = fals
       </div>
 
       {!compact ? (
-        <p className="mt-2 truncate text-xs font-bold text-slate-500">
+        <p className="mt-2 truncate text-xs font-bold text-slate-500 dark:text-slate-400">
           {selectedArea ? `${areaTypeLabel(selectedArea.type)} / ${Math.round(selectedArea.width)} x ${Math.round(selectedArea.height)}` : "クリックで選択できます"}
         </p>
       ) : null}

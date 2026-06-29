@@ -33,7 +33,7 @@ function App() {
   if (!ready) {
     return (
       <main className="grid min-h-screen place-items-center bg-[#f7fcfd] p-6">
-        <div className="rounded-[1.75rem] border border-cyan-100 bg-white/82 p-8 text-center shadow-soft">
+        <div className="rounded-[1.75rem] border border-cyan-100 bg-white/90 p-8 text-center shadow-soft">
           <div className="mx-auto mb-4 h-12 w-12 animate-pulse rounded-2xl bg-cyan-100" />
           <p className="font-black text-slate-800">冷蔵庫を開いています</p>
           <p className="mt-1 text-sm text-slate-500">ローカルデータを読み込み中です。</p>

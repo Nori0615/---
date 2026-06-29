@@ -56,16 +56,16 @@ export function getFoodStatus(food: FoodItem, warningDays = 7): FoodStatus {
 export function statusClass(state: ExpiryState) {
   switch (state) {
     case "expired":
-      return "border-rose-200 bg-rose-50 text-rose-800";
+      return "border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900/70 dark:bg-rose-950/40 dark:text-rose-200";
     case "today":
-      return "border-orange-200 bg-orange-50 text-orange-800";
+      return "border-orange-200 bg-orange-50 text-orange-800 dark:border-orange-900/70 dark:bg-orange-950/40 dark:text-orange-200";
     case "soon":
-      return "border-amber-200 bg-amber-50 text-amber-800";
+      return "border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-900/70 dark:bg-amber-950/40 dark:text-amber-200";
     case "warning":
-      return "border-sky-200 bg-sky-50 text-sky-800";
+      return "border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-900/70 dark:bg-sky-950/40 dark:text-sky-200";
     case "normal":
-      return "border-emerald-100 bg-emerald-50 text-emerald-800";
+      return "border-emerald-100 bg-emerald-50 text-emerald-800 dark:border-emerald-900/70 dark:bg-emerald-950/35 dark:text-emerald-200";
     case "none":
-      return "border-slate-200 bg-slate-50 text-slate-600";
+      return "border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300";
   }
 }

@@ -17,6 +17,18 @@ function defaultSettings(): AppSettings {
   };
 }
 
+function normalizeSettings(settings?: AppSettings): AppSettings {
+  if (!settings) return defaultSettings();
+  const defaults = defaultSettings();
+  return {
+    ...defaults,
+    ...settings,
+    id: "local",
+    createdAt: settings.createdAt ?? defaults.createdAt,
+    updatedAt: settings.updatedAt ?? defaults.updatedAt,
+  };
+}
+
 interface SettingsState {
   settings?: AppSettings;
   loading: boolean;
@@ -28,11 +40,9 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   loading: true,
   initialize: async () => {
     set({ loading: true });
-    let settings = await db.settings.get("local");
-    if (!settings) {
-      settings = defaultSettings();
-      await db.settings.put(settings);
-    }
+    const storedSettings = await db.settings.get("local");
+    const settings = normalizeSettings(storedSettings);
+    await db.settings.put(settings);
     set({ settings, loading: false });
     return settings;
   },

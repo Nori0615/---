@@ -46,6 +46,22 @@ button {
   background: #0f172a;
 }
 
+.food-card {
+  --food-card-bg: rgba(255, 255, 255, 0.96);
+}
+
+.dark .food-card {
+  --food-card-bg: rgba(15, 23, 42, 0.92);
+}
+
+.fridge-area {
+  --fridge-area-bg: rgba(255, 255, 255, 0.82);
+}
+
+.dark .fridge-area {
+  --fridge-area-bg: rgba(15, 23, 42, 0.72);
+}
+
 .fridge-grid {
   background-image:
     linear-gradient(rgba(117, 170, 188, 0.08) 1px, transparent 1px),

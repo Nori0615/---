@@ -424,7 +424,7 @@ export function DraggableLayoutPreview({
         type="button"
         data-preview-resize
         className={clsx(
-          "focus-ring absolute bottom-1 right-1 z-50 grid place-items-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:bg-slate-50",
+          "focus-ring absolute bottom-1 right-1 z-50 grid place-items-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-sm backdrop-blur transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-950/90 dark:text-slate-200 dark:hover:bg-slate-800",
           compact ? "h-6 w-6" : "h-8 w-8",
         )}
         aria-label="PiPのサイズを変更"

@@ -28,10 +28,10 @@ export function Toast() {
       <div
         role="status"
         className={clsx(
-          "flex max-w-sm items-center gap-3 rounded-2xl border bg-white px-4 py-3 text-sm font-bold shadow-soft",
-          toast.type === "success" && "border-emerald-100 text-emerald-800",
-          toast.type === "error" && "border-rose-100 text-rose-800",
-          toast.type === "info" && "border-sky-100 text-sky-800",
+          "flex max-w-sm items-center gap-3 rounded-2xl border bg-white px-4 py-3 text-sm font-bold shadow-soft transition-colors dark:bg-slate-900",
+          toast.type === "success" && "border-emerald-100 text-emerald-800 dark:border-emerald-900/70 dark:text-emerald-200",
+          toast.type === "error" && "border-rose-100 text-rose-800 dark:border-rose-900/70 dark:text-rose-200",
+          toast.type === "info" && "border-sky-100 text-sky-800 dark:border-sky-900/70 dark:text-sky-200",
         )}
       >
         <Icon size={19} />

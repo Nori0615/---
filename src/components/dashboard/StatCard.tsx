@@ -18,13 +18,13 @@ const toneClass = {
 
 export function StatCard({ label, value, helper, icon: Icon, tone = "cyan" }: StatCardProps) {
   return (
-    <section className={`rounded-[1.5rem] border p-4 ${toneClass[tone]}`}>
+    <section className={`rounded-[1.5rem] border p-4 transition-colors dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-200 ${toneClass[tone]}`}>
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="text-sm font-black opacity-80">{label}</p>
-          <p className="mt-2 text-3xl font-black text-slate-900">{value}</p>
+          <p className="mt-2 text-3xl font-black text-slate-900 dark:text-slate-50">{value}</p>
         </div>
-        <div className="grid h-12 w-12 place-items-center rounded-2xl bg-white/80">
+        <div className="grid h-12 w-12 place-items-center rounded-2xl bg-white/80 dark:bg-slate-800">
           <Icon size={22} />
         </div>
       </div>

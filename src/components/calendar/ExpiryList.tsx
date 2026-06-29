@@ -29,10 +29,10 @@ export function ExpiryList({ mode = "all" }: ExpiryListProps) {
     .sort((a, b) => (a.status.daysLeft ?? 999) - (b.status.daysLeft ?? 999));
 
   return (
-    <section className="rounded-[1.75rem] border border-cyan-100 bg-white/82 p-5 shadow-soft">
+    <section className="rounded-[1.75rem] border border-cyan-100 bg-white/90 p-5 shadow-soft transition-colors dark:border-slate-800 dark:bg-slate-900/90">
       <div className="mb-4 flex items-center gap-2">
-        <Clock3 size={18} className="text-cyan-700" />
-        <h2 className="text-lg font-black text-slate-900">期限が近い順</h2>
+        <Clock3 size={18} className="text-cyan-700 dark:text-teal-300" />
+        <h2 className="text-lg font-black text-slate-900 dark:text-slate-50">期限が近い順</h2>
       </div>
       <div className="grid gap-2">
         {rows.length > 0 ? (
@@ -48,8 +48,8 @@ export function ExpiryList({ mode = "all" }: ExpiryListProps) {
                   {food.icon}
                 </span>
                 <span className="min-w-0">
-                  <span className="block truncate font-black text-slate-900">{food.name}</span>
-                  <span className="text-xs font-bold text-slate-500">{status.kind === "consume" ? "消費期限" : "賞味期限"}</span>
+                  <span className="block truncate font-black text-slate-900 dark:text-slate-50">{food.name}</span>
+                  <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{status.kind === "consume" ? "消費期限" : "賞味期限"}</span>
                 </span>
               </span>
               <span className="shrink-0 text-right text-sm font-black">

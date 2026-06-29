@@ -39,7 +39,7 @@ export function FoodDetailSheet() {
   return (
     <Sheet open={Boolean(food)} title={food.name} onClose={() => selectFood(undefined)}>
       <div className="grid gap-5">
-        <div className="rounded-[1.5rem] border border-cyan-100 p-4" style={{ backgroundColor: food.color }}>
+        <div className="rounded-[1.5rem] border border-cyan-100 p-4 dark:border-slate-700" style={{ backgroundColor: food.color }}>
           <div className="flex items-center gap-3">
             <div className="grid h-14 w-14 place-items-center rounded-2xl bg-white/80 text-3xl">{food.icon}</div>
             <div>
@@ -51,8 +51,8 @@ export function FoodDetailSheet() {
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-2xl bg-slate-50 p-3">
-            <p className="text-xs font-bold text-slate-500">数量</p>
+          <div className="rounded-2xl bg-slate-50 p-3 transition-colors dark:bg-slate-950">
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400">数量</p>
             <div className="mt-2 flex items-center gap-2">
               <Button variant="secondary" size="icon" onClick={() => void changeQuantity(food.id, -1)} aria-label="数量を減らす">
                 <Minus size={17} />
@@ -66,9 +66,9 @@ export function FoodDetailSheet() {
               </Button>
             </div>
           </div>
-          <div className="rounded-2xl bg-slate-50 p-3">
-            <p className="text-xs font-bold text-slate-500">保存場所</p>
-            <p className="mt-2 text-lg font-black text-slate-900">{area?.name ?? "未設定"}</p>
+          <div className="rounded-2xl bg-slate-50 p-3 transition-colors dark:bg-slate-950">
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400">保存場所</p>
+            <p className="mt-2 text-lg font-black text-slate-900 dark:text-slate-50">{area?.name ?? "未設定"}</p>
           </div>
         </div>
 
@@ -80,19 +80,19 @@ export function FoodDetailSheet() {
         />
 
         <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-2xl bg-white p-3 shadow-sm">
-            <p className="text-xs font-bold text-slate-500">消費期限</p>
-            <p className="mt-1 font-black text-slate-900">{displayDate(food.expireDate)}</p>
+          <div className="rounded-2xl bg-white p-3 shadow-sm transition-colors dark:bg-slate-950">
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400">消費期限</p>
+            <p className="mt-1 font-black text-slate-900 dark:text-slate-50">{displayDate(food.expireDate)}</p>
           </div>
-          <div className="rounded-2xl bg-white p-3 shadow-sm">
-            <p className="text-xs font-bold text-slate-500">賞味期限</p>
-            <p className="mt-1 font-black text-slate-900">{displayDate(food.bestBeforeDate)}</p>
+          <div className="rounded-2xl bg-white p-3 shadow-sm transition-colors dark:bg-slate-950">
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400">賞味期限</p>
+            <p className="mt-1 font-black text-slate-900 dark:text-slate-50">{displayDate(food.bestBeforeDate)}</p>
           </div>
         </div>
 
         {food.memo ? (
-          <div className="rounded-2xl bg-cyan-50 p-4 text-sm leading-6 text-slate-700">
-            <p className="mb-1 font-black text-slate-900">メモ</p>
+          <div className="rounded-2xl bg-cyan-50 p-4 text-sm leading-6 text-slate-700 transition-colors dark:bg-teal-950/40 dark:text-slate-300">
+            <p className="mb-1 font-black text-slate-900 dark:text-slate-50">メモ</p>
             {food.memo}
           </div>
         ) : null}

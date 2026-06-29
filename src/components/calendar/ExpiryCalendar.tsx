@@ -43,15 +43,15 @@ export function ExpiryCalendar() {
   const goNext = () => setAnchor((date) => (view === "month" ? addMonths(date, 1) : addWeeks(date, 1)));
 
   return (
-    <section className="rounded-[1.75rem] border border-cyan-100 bg-white/82 p-4 shadow-soft">
+    <section className="rounded-[1.75rem] border border-cyan-100 bg-white/90 p-4 shadow-soft transition-colors dark:border-slate-800 dark:bg-slate-900/90">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-cyan-700">
+          <p className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-cyan-700 dark:text-teal-300">
             <CalendarDays size={15} />
             Expiry
           </p>
-          <h2 className="text-xl font-black text-slate-900">{title}</h2>
-          <p className="mt-1 text-sm text-slate-500">{inRangeCount}件の期限があります</p>
+          <h2 className="text-xl font-black text-slate-900 dark:text-slate-50">{title}</h2>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{inRangeCount}件の期限があります</p>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="secondary" size="icon" onClick={goPrev} aria-label="前へ">
@@ -66,20 +66,22 @@ export function ExpiryCalendar() {
         </div>
       </div>
 
-      <div className="mt-4 inline-flex rounded-2xl bg-cyan-50 p-1">
+      <div className="mt-4 inline-flex rounded-2xl bg-cyan-50 p-1 transition-colors dark:bg-slate-950">
         {(["month", "week"] as const).map((item) => (
           <button
             key={item}
             type="button"
             onClick={() => void updateSettings({ calendarView: item })}
-            className={`focus-ring rounded-xl px-4 py-2 text-sm font-black ${view === item ? "bg-white text-cyan-900 shadow-sm" : "text-cyan-700"}`}
+            className={`focus-ring rounded-xl px-4 py-2 text-sm font-black ${
+              view === item ? "bg-white text-cyan-900 shadow-sm dark:bg-slate-100 dark:text-slate-950" : "text-cyan-700 dark:text-teal-200"
+            }`}
           >
             {item === "month" ? "月表示" : "週表示"}
           </button>
         ))}
       </div>
 
-      <div className="mt-4 grid grid-cols-7 gap-2 text-center text-xs font-black text-slate-500">
+      <div className="mt-4 grid grid-cols-7 gap-2 text-center text-xs font-black text-slate-500 dark:text-slate-400">
         {["日", "月", "火", "水", "木", "金", "土"].map((day) => (
           <div key={day}>{day}</div>
         ))}

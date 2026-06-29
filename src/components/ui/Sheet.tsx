@@ -18,10 +18,10 @@ export function Sheet({ open, title, children, onClose }: SheetProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="sheet-title"
-        className="ml-auto flex h-full w-full max-w-md flex-col bg-white shadow-soft"
+        className="ml-auto flex h-full w-full max-w-md flex-col bg-white shadow-soft transition-colors dark:bg-slate-900"
       >
-        <div className="flex items-center justify-between border-b border-cyan-100 px-5 py-4">
-          <h2 id="sheet-title" className="text-lg font-black text-slate-900">
+        <div className="flex items-center justify-between border-b border-cyan-100 px-5 py-4 transition-colors dark:border-slate-800">
+          <h2 id="sheet-title" className="text-lg font-black text-slate-900 dark:text-slate-50">
             {title}
           </h2>
           <Button variant="ghost" size="icon" onClick={onClose} aria-label="閉じる">

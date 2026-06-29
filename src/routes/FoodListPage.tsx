@@ -60,8 +60,8 @@ export function FoodListPage() {
   return (
     <div className="grid gap-5">
       <div>
-        <p className="text-sm font-black text-cyan-700">Food List</p>
-        <h2 className="text-2xl font-black text-slate-900">食材一覧</h2>
+        <p className="text-sm font-black text-cyan-700 dark:text-teal-300">Food List</p>
+        <h2 className="text-2xl font-black text-slate-900 dark:text-slate-50">食材一覧</h2>
       </div>
       <FoodSearch
         search={search}
@@ -84,15 +84,15 @@ export function FoodListPage() {
       <div className="grid gap-3">
         {visibleFoods.length > 0 ? (
           visibleFoods.map(({ food, status }) => (
-            <section key={food.id} className="rounded-[1.5rem] border border-cyan-100 bg-white/84 p-4 shadow-sm">
+            <section key={food.id} className="rounded-[1.5rem] border border-cyan-100 bg-white/90 p-4 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <button type="button" onClick={() => selectFood(food.id)} className="focus-ring flex min-w-0 flex-1 items-center gap-3 rounded-2xl text-left">
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl text-2xl" style={{ backgroundColor: food.color }}>
                     {food.icon}
                   </span>
                   <span className="min-w-0">
-                    <span className="block truncate text-lg font-black text-slate-900">{food.name}</span>
-                    <span className="text-sm font-bold text-slate-500">
+                    <span className="block truncate text-lg font-black text-slate-900 dark:text-slate-50">{food.name}</span>
+                    <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
                       {food.category} ・ {food.quantity}
                       {food.unit}
                     </span>

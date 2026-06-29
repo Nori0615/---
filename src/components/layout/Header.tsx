@@ -17,11 +17,11 @@ export function Header() {
   const openFoodForm = useUiStore((state) => state.openFoodForm);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/88 px-4 py-3 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 px-4 py-3 backdrop-blur transition-colors dark:border-slate-800/90 dark:bg-slate-950/90">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-teal-700">Fridgely</p>
-          <h1 className="truncate text-xl font-black text-slate-900">マイ冷蔵庫</h1>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-teal-700 dark:text-teal-300">Fridgely</p>
+          <h1 className="truncate text-xl font-black text-slate-900 dark:text-slate-50">マイ冷蔵庫</h1>
         </div>
         <nav className="hidden items-center gap-1 lg:flex" aria-label="メインナビゲーション">
           {navItems.map((item) => (
@@ -31,7 +31,7 @@ export function Header() {
               className={({ isActive }) =>
                 clsx(
                   "focus-ring inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-black transition",
-                  isActive ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100",
+                  isActive ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950" : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800",
                 )
               }
             >

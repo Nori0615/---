@@ -1,5 +1,5 @@
 import { Download, RotateCcw, Trash2, Upload } from "lucide-react";
-import { ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { Select } from "../components/ui/Select";
@@ -28,8 +28,10 @@ export function SettingsPage() {
     const link = document.createElement("a");
     link.href = url;
     link.download = `fridgely-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(link);
     link.click();
-    URL.revokeObjectURL(url);
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
     showToast("バックアップを書き出しました");
   };
 
@@ -61,15 +63,27 @@ export function SettingsPage() {
     showToast("初期状態に戻しました", "info");
   };
 
+  const restoreDefaultLayout = async () => {
+    await resetLayout();
+    const areas = await initializeFridge();
+    await initializeFoods(areas);
+    showToast("初期レイアウトに戻しました", "info");
+  };
+
+  const updateWarningDays = (value: number) => {
+    const nextValue = Math.min(14, Math.max(1, value || 1));
+    void updateSettings({ warningDays: nextValue });
+  };
+
   return (
     <div className="grid gap-5">
       <div>
-        <p className="text-sm font-black text-cyan-700">Settings</p>
-        <h2 className="text-2xl font-black text-slate-900">設定</h2>
+        <p className="text-sm font-black text-teal-700 dark:text-teal-300">Settings</p>
+        <h2 className="text-2xl font-black text-slate-900 dark:text-slate-50">設定</h2>
       </div>
 
-      <section className="rounded-[1.75rem] border border-cyan-100 bg-white/82 p-5 shadow-soft">
-        <h3 className="text-lg font-black text-slate-900">見た目と期限表示</h3>
+      <section className="rounded-[1.25rem] border border-slate-200 bg-white/90 p-5 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
+        <h3 className="text-lg font-black text-slate-900 dark:text-slate-50">見た目と期限表示</h3>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           <Select
             label="テーマ"
@@ -98,31 +112,58 @@ export function SettingsPage() {
               { value: "compact", label: "コンパクト" },
             ]}
           />
-          <Input
-            label={`期限通知風の表示: ${settings.warningDays}日前から`}
-            type="range"
-            min="1"
-            max="14"
-            value={settings.warningDays}
-            onChange={(event) => void updateSettings({ warningDays: Number(event.target.value) })}
+          <Select
+            label="期限カレンダー"
+            value={settings.calendarView}
+            onChange={(event) => void updateSettings({ calendarView: event.target.value as typeof settings.calendarView })}
+            options={[
+              { value: "month", label: "月表示" },
+              { value: "week", label: "週表示" },
+            ]}
           />
+          <div className="grid gap-3">
+            <label className="grid gap-1.5 text-sm font-bold text-slate-700 dark:text-slate-200">
+              <span className="flex items-center justify-between gap-3">
+                <span>期限通知風の表示</span>
+                <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-black text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                  {settings.warningDays}日前から
+                </span>
+              </span>
+              <input
+                type="range"
+                min="1"
+                max="14"
+                value={settings.warningDays}
+                onChange={(event) => updateWarningDays(Number(event.target.value))}
+                className="focus-ring h-10 w-full accent-cyan-700 dark:accent-teal-300"
+              />
+            </label>
+            <Input
+              label="通知日数"
+              type="number"
+              min="1"
+              max="14"
+              value={settings.warningDays}
+              onChange={(event) => updateWarningDays(Number(event.target.value))}
+            />
+          </div>
         </div>
       </section>
 
-      <section className="rounded-[1.75rem] border border-cyan-100 bg-white/82 p-5 shadow-soft">
-        <h3 className="text-lg font-black text-slate-900">データ</h3>
-        <p className="mt-1 text-sm text-slate-600">クラウド同期は使わず、IndexedDBにローカル保存しています。</p>
+      <section className="rounded-[1.25rem] border border-slate-200 bg-white/90 p-5 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900/90">
+        <h3 className="text-lg font-black text-slate-900 dark:text-slate-50">データ</h3>
+        <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">クラウド同期は使わず、IndexedDBにローカル保存しています。</p>
         <div className="mt-4 flex flex-wrap gap-2">
           <Button onClick={() => void download()}>
             <Download size={18} />
             エクスポート
           </Button>
-          <label className="focus-within:outline-cyan-700 inline-flex cursor-pointer items-center gap-2 rounded-2xl border border-cyan-100 bg-white px-4 py-3 text-sm font-bold text-slate-700 shadow-sm">
+          <label className="focus-within:outline-cyan-700 inline-flex cursor-pointer items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 shadow-sm transition-colors dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
             <Upload size={18} />
             インポート
             <input type="file" accept="application/json" className="sr-only" onChange={(event) => void importFile(event)} />
           </label>
-          <Button variant="secondary" onClick={() => void resetLayout().then(() => showToast("初期レイアウトに戻しました"))}>
+          <Button variant="secondary" onClick={() => void restoreDefaultLayout()}>
             <RotateCcw size={18} />
             初期レイアウト
           </Button>
@@ -133,9 +174,9 @@ export function SettingsPage() {
         </div>
       </section>
 
-      <section className="rounded-[1.75rem] border border-emerald-100 bg-emerald-50/70 p-5">
-        <h3 className="text-lg font-black text-slate-900">PWA / オフライン</h3>
-        <p className="mt-2 text-sm leading-6 text-slate-700">
+      <section className="rounded-[1.25rem] border border-teal-100 bg-teal-50/70 p-5 transition-colors dark:border-teal-900/70 dark:bg-teal-950/30">
+        <h3 className="text-lg font-black text-slate-900 dark:text-slate-50">PWA / オフライン</h3>
+        <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
           ビルド後はService WorkerとWeb App Manifestでオフライン起動に対応します。スマホではブラウザの「ホーム画面に追加」からアプリのように使えます。
         </p>
       </section>
