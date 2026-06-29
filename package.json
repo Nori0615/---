@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "api": "node server/index.mjs",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "recipes:api": "node server/recipes-api.example.mjs"
+    "recipes:api": "node server/index.mjs"
   },
   "dependencies": {
     "clsx": "latest",

@@ -77,3 +77,5 @@ export interface BackupData {
   areas: FridgeArea[];
   settings: AppSettings;
 }
+
+export * from "./receipt";

@@ -7,6 +7,7 @@ import { useSettingsStore } from "./store/settingsStore";
 import { CalendarPage } from "./routes/CalendarPage";
 import { HomePage } from "./routes/HomePage";
 import { LayoutEditorPage } from "./routes/LayoutEditorPage";
+import { ReceiptScanPage } from "./routes/ReceiptScanPage";
 import { RecipesPage } from "./routes/RecipesPage";
 import { SettingsPage } from "./routes/SettingsPage";
 
@@ -47,6 +48,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/layout" element={<LayoutEditorPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/receipt" element={<ReceiptScanPage />} />
         <Route path="/recipes" element={<RecipesPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />

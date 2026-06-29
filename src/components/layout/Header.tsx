@@ -1,4 +1,4 @@
-import { CalendarDays, ChefHat, Home, LayoutGrid, Plus, Settings } from "lucide-react";
+import { CalendarDays, ChefHat, Home, LayoutGrid, Plus, ReceiptText, Settings } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { clsx } from "clsx";
 import { useUiStore } from "../../store/uiStore";
@@ -8,6 +8,7 @@ const navItems = [
   { to: "/", label: "冷蔵庫", icon: Home },
   { to: "/layout", label: "レイアウト", icon: LayoutGrid },
   { to: "/calendar", label: "期限", icon: CalendarDays },
+  { to: "/receipt", label: "レシート", icon: ReceiptText },
   { to: "/recipes", label: "レシピ", icon: ChefHat },
   { to: "/settings", label: "設定", icon: Settings },
 ];
