@@ -76,6 +76,9 @@ export async function createRecipes(payload) {
 
   if (!response.ok) {
     const message = await response.text().catch(() => "");
+    if (response.status === 401) {
+      throw new Error("OpenAI APIキーが無効です。.env.local の OPENAI_API_KEY を新しいキーに差し替えて、APIサーバーを再起動してください。");
+    }
     throw new Error(message || `OpenAI APIでエラーが発生しました。(${response.status})`);
   }
 
