@@ -78,17 +78,18 @@ export function RecipesPage() {
         }),
       });
 
+      const data = (await response.json().catch(() => undefined)) as (RecipeResponse & { error?: string }) | undefined;
       if (!response.ok) {
-        throw new Error(response.status === 404 ? "レシピ提案APIが未設定です。" : "レシピ提案に失敗しました。");
+        throw new Error(data?.error ?? (response.status === 404 ? "レシピ提案APIが未設定です。" : "レシピ提案に失敗しました。"));
       }
 
-      const data = (await response.json()) as RecipeResponse;
-      if (!Array.isArray(data.recipes)) {
+      if (!data || !Array.isArray(data.recipes)) {
         throw new Error("レシピの形式が正しくありません。");
       }
       setRecipes(data.recipes);
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "レシピ提案に失敗しました。");
+      const message = caught instanceof Error ? caught.message : "";
+      setError(message.includes("fetch") ? "APIサーバーが起動していません。pnpm api を起動してください。" : message || "レシピ提案に失敗しました。");
     } finally {
       setLoading(false);
     }

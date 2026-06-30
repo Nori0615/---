@@ -6,7 +6,7 @@ import { sendJson } from "./utils/http.mjs";
 
 loadEnv();
 
-const port = Number(process.env.PORT || process.env.RECIPE_API_PORT || 3001);
+const port = Number(process.env.PORT || 3001);
 const allowedOrigin = process.env.ALLOWED_ORIGIN || "*";
 
 const server = http.createServer(async (request, response) => {

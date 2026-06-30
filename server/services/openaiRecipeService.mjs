@@ -1,5 +1,37 @@
 import { outputTextFromResponse } from "../utils/http.mjs";
 
+const recipeSchema = {
+  type: "object",
+  additionalProperties: false,
+  required: ["recipes"],
+  properties: {
+    recipes: {
+      type: "array",
+      minItems: 1,
+      maxItems: 3,
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["title", "time", "servings", "ingredients", "steps", "tips"],
+        properties: {
+          title: { type: "string" },
+          time: { type: "string" },
+          servings: { type: "string" },
+          ingredients: {
+            type: "array",
+            items: { type: "string" },
+          },
+          steps: {
+            type: "array",
+            items: { type: "string" },
+          },
+          tips: { type: "string" },
+        },
+      },
+    },
+  },
+};
+
 export async function createRecipes(payload) {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
@@ -20,7 +52,7 @@ export async function createRecipes(payload) {
         {
           role: "system",
           content:
-            "You are a practical Japanese home-cooking assistant. Return only valid JSON with a recipes array. Each recipe has title, time, servings, ingredients, steps, and tips.",
+            "あなたは日本の家庭料理に詳しいアシスタントです。冷蔵庫の食材を優先し、作りやすいレシピを日本語で提案してください。必ず指定されたJSON Schemaに従ってください。",
         },
         {
           role: "user",
@@ -31,13 +63,35 @@ export async function createRecipes(payload) {
           }),
         },
       ],
+      text: {
+        format: {
+          type: "json_schema",
+          name: "recipe_suggestions",
+          strict: true,
+          schema: recipeSchema,
+        },
+      },
     }),
   });
 
   if (!response.ok) {
-    throw new Error(`OpenAI APIでエラーが発生しました。(${response.status})`);
+    const message = await response.text().catch(() => "");
+    throw new Error(message || `OpenAI APIでエラーが発生しました。(${response.status})`);
   }
 
   const data = await response.json();
-  return JSON.parse(outputTextFromResponse(data));
+  const text = outputTextFromResponse(data);
+  if (!text) {
+    throw new Error("レシピ提案を取得できませんでした。");
+  }
+
+  try {
+    const parsed = JSON.parse(text);
+    if (!Array.isArray(parsed.recipes)) {
+      throw new Error("recipes is missing");
+    }
+    return parsed;
+  } catch {
+    throw new Error("レシピの形式が正しくありません。もう一度試してください。");
+  }
 }
